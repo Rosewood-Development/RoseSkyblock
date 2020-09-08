@@ -1,0 +1,54 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.0'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+group 'dev.rosewood'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+	jcenter()
+
+    maven { url = 'https://repo.codemc.org/repository/maven-public' }
+    maven { url = 'https://repo.rosewooddev.io/repository/public/' }
+
+    maven {
+        url = 'https://repo.rosewooddev.io/repository/maven-public'
+        credentials {
+            username project.mavenUser
+            password project.mavenPassword
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+}
+
+dependencies {
+    shadow 'org.spigotmc:spigot:1.16.2'
+
+    implementation 'dev.rosewood:rosegarden:1.0.4-SNAPSHOT'
+    implementation 'dev.rosewood:guiframework:1.1.1'
+
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+}
+
+shadowJar {
+    archiveClassifier.set(null)
+    minimize()
+
+    relocate('dev.rosewood.rosegarden', 'dev.rosewood.roseskyblock.lib.rosegarden')
+    relocate('dev.rosewood.guiframework', 'dev.rosewood.roseskyblock.lib.guiframework')
+}
+
+processResources {
+    from (sourceSets.main.resources.srcDirs) {
+        include '**/*.yml'
+        filter ReplaceTokens, tokens: ["version": project.property("version")]
+    }
+}
+
+build.dependsOn shadowJar

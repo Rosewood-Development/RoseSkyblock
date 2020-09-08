@@ -1,0 +1,6 @@
+name: RoseSkyblock
+version: '@version@'
+authors: [Esophose]
+main: dev.rosewood.roseskyblock.RoseSkyblock
+api-version: '1.13'
+softdepend: [PlaceholderAPI]
