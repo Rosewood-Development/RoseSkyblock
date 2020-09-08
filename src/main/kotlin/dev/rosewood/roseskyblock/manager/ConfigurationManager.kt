@@ -6,29 +6,28 @@ import dev.rosewood.rosegarden.config.RoseSetting
 import dev.rosewood.rosegarden.manager.AbstractConfigurationManager
 import dev.rosewood.roseskyblock.RoseSkyblock
 
-
 class ConfigurationManager(rosePlugin: RosePlugin) : AbstractConfigurationManager(rosePlugin, Setting::class.java) {
 
-    enum class Setting(private val key: String?, private val defaultValue: Any?, private vararg val comments: String) : RoseSetting {
+    enum class Setting(private val key: String, private val defaultValue: Any, private vararg val comments: String) : RoseSetting {
 
         ;
 
         private var value: Any? = null
 
-        override fun getKey(): String? {
-            return key
+        override fun getKey(): String {
+            return this.key
         }
 
-        override fun getDefaultValue(): Any? {
-            return defaultValue
+        override fun getDefaultValue(): Any {
+            return this.defaultValue
         }
 
         override fun getComments(): Array<out String> {
-            return comments
+            return this.comments
         }
 
         override fun getCachedValue(): Any? {
-            return value
+            return this.value
         }
 
         override fun setCachedValue(value: Any?) {

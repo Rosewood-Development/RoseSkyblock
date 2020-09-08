@@ -12,6 +12,8 @@ repositories {
     mavenCentral()
 	jcenter()
 
+    maven { url = 'https://papermc.io/repo/repository/maven-public/' }
+    maven { url = 'https://maven.enginehub.org/repo/' }
     maven { url = 'https://repo.codemc.org/repository/maven-public' }
     maven { url = 'https://repo.rosewooddev.io/repository/public/' }
 
@@ -29,9 +31,11 @@ repositories {
 
 dependencies {
     shadow 'org.spigotmc:spigot:1.16.2'
+    shadow 'com.sk89q.worldedit:worldedit-bukkit:7.2.0-SNAPSHOT'
 
     implementation 'dev.rosewood:rosegarden:1.0.4-SNAPSHOT'
     implementation 'dev.rosewood:guiframework:1.1.1'
+    implementation 'io.papermc:paperlib:1.0.5'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 }
@@ -40,8 +44,11 @@ shadowJar {
     archiveClassifier.set(null)
     minimize()
 
+    relocate('kotlin', 'dev.rosewood.roseskyblock.lib.kotlin')
+    relocate('org.jetbrains.annotations', 'dev.rosewood.roseskyblock.lib.annotations')
     relocate('dev.rosewood.rosegarden', 'dev.rosewood.roseskyblock.lib.rosegarden')
     relocate('dev.rosewood.guiframework', 'dev.rosewood.roseskyblock.lib.guiframework')
+    relocate('io.papermc.lib', 'dev.rosewood.roseskyblock.lib.paperlib')
 }
 
 processResources {

@@ -3,4 +3,8 @@ version: '@version@'
 authors: [Esophose]
 main: dev.rosewood.roseskyblock.RoseSkyblock
 api-version: '1.13'
-softdepend: [PlaceholderAPI]
+softdepend: [WorldEdit, PlaceholderAPI]
+commands:
+  skyblock:
+    aliases: [rsb, roseskyblock]
+    description: The base RoseSkyblock command.
