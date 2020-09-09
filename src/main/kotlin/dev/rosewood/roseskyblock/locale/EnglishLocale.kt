@@ -15,7 +15,20 @@ class EnglishLocale : Locale {
 
     override fun getDefaultLocaleValues(): MutableMap<String, Any> {
         return object: LinkedHashMap<String, Any>() { init {
-            this["test"] = "test2" // TODO
+            this["#0"] = "Plugin Message Prefix"
+            this["prefix"] = "&7[<g:#8A2387:#E94057:#F27121>RoseSkyblock&7] "
+
+            this["#2"] = "Base Command Message"
+            this["base-command-color"] = "&e"
+            this["base-command-help"] = "&eUse &b/rsb help &efor command information."
+
+            this["#3"] = "Help Command";
+            this["command-help-description"] = "&8 - &d/rsb help &7- Displays the help menu... You have arrived"
+            this["command-help-title"] = "&eAvailable Commands:"
+
+            this["#4"] = "Reload Command";
+            this["command-reload-description"] = "&8 - &d/rsb reload &7- Reloads the plugin"
+            this["command-reload-reloaded"] = "&ePlugin data, configuration, and locale files were reloaded."
         }}
     }
 

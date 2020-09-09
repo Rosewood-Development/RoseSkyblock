@@ -1,6 +1,8 @@
 package dev.rosewood.roseskyblock.island
 
-class Island {
+import dev.rosewood.roseskyblock.world.IslandWorld
+
+class Island(val islandWorld: IslandWorld) {
 
 
 

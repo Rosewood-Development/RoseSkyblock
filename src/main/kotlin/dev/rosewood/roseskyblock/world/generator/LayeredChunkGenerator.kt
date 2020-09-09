@@ -1,12 +1,13 @@
 package dev.rosewood.roseskyblock.world.generator
 
+import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.utils.NMSUtil
 import java.util.Random
 import org.bukkit.World
 import org.bukkit.block.Biome
 import org.bukkit.generator.ChunkGenerator
 
-class VoidGenerator : ChunkGenerator() {
+class LayeredChunkGenerator(private val rosePlugin: RosePlugin) : ChunkGenerator() {
 
     override fun generateChunkData(world: World, random: Random, chunkX: Int, chunkZ: Int, biomeGrid: BiomeGrid): ChunkData {
         val biome = when (world.environment) {

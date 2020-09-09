@@ -23,12 +23,10 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         val islandDistance = 30 // TODO: Probably make this 1500 or something along those lines
         val islandHeight = 64.0 // TODO: Setting per island type
 
-        var n = islandCount
         if (islandCount == 0)
             return Location(world, 0.0, islandHeight, 0.0)
 
-        n--
-
+        val n = islandCount - 1
         val r = floor((sqrt(n + 1.0) - 1) / 2) + 1
         val p = (8 * r * (r - 1)) / 2
         val en = r * 2
@@ -56,7 +54,6 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
             }
         }
 
-        n += 2
         return Location(world, x * islandDistance, islandHeight, z * islandDistance)
     }
 
