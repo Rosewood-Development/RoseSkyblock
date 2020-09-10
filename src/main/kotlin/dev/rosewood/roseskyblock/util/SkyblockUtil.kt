@@ -1,4 +1,4 @@
-package dev.rosewood.roseskyblock.extension
+package dev.rosewood.roseskyblock.util
 
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.manager.Manager

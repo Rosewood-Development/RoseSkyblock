@@ -3,6 +3,5 @@ version: '@version@'
 authors: [Esophose]
 main: dev.rosewood.roseskyblock.RoseSkyblock
 api-version: '1.13'
-load: STARTUP
 loadbefore: [Multiverse, Hyperverse, UltraRegions]
 softdepend: [WorldEdit, PlaceholderAPI]

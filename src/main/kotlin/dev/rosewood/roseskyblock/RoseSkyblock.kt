@@ -5,6 +5,8 @@ import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.database.DataMigration
 import dev.rosewood.rosegarden.manager.Manager
 import dev.rosewood.rosegarden.utils.NMSUtil
+import dev.rosewood.roseskyblock.database.migrations._1_Create_Table_Island
+import dev.rosewood.roseskyblock.database.migrations._2_Create_Table_Island_Member
 import dev.rosewood.roseskyblock.manager.CommandManager
 import dev.rosewood.roseskyblock.manager.ConfigurationManager
 import dev.rosewood.roseskyblock.manager.DataManager
@@ -12,11 +14,8 @@ import dev.rosewood.roseskyblock.manager.IslandManager
 import dev.rosewood.roseskyblock.manager.LocaleManager
 import dev.rosewood.roseskyblock.manager.SchematicManager
 import dev.rosewood.roseskyblock.manager.WorldManager
-import dev.rosewood.roseskyblock.world.generator.VoidGenerator
 import java.util.logging.Level
 import org.bukkit.Bukkit
-import org.bukkit.World
-import org.bukkit.WorldCreator
 
 class RoseSkyblock : RosePlugin(
     -1,
@@ -54,15 +53,6 @@ class RoseSkyblock : RosePlugin(
 
         // TODO: ROSEGARDEN
         CommandAPI.onEnable(this)
-
-        if (Bukkit.getWorld("skyblock_world") == null) {
-            Bukkit.createWorld(
-                WorldCreator.name("skyblock_world")
-                    .generator(VoidGenerator(this))
-                    .generateStructures(false)
-                    .environment(World.Environment.NORMAL)
-            )
-        }
     }
 
     override fun disable() {
@@ -78,8 +68,11 @@ class RoseSkyblock : RosePlugin(
         )
     }
 
-    override fun <T : DataMigration> getDataMigrations(): List<Class<T>> {
-        return listOf()
+    override fun getDataMigrations(): List<Class<out DataMigration>> {
+        return listOf(
+            _1_Create_Table_Island::class.java,
+            _2_Create_Table_Island_Member::class.java
+        )
     }
 
 }

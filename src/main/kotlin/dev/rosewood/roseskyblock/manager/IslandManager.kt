@@ -2,10 +2,10 @@ package dev.rosewood.roseskyblock.manager
 
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.manager.Manager
+import dev.rosewood.roseskyblock.world.IslandWorld
 import kotlin.math.floor
 import kotlin.math.sqrt
 import org.bukkit.Location
-import org.bukkit.World
 
 class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
@@ -18,13 +18,12 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     }
 
     // https://stackoverflow.com/a/19287714
-    fun getNextIslandLocation(world: World): Location {
+    fun getNextIslandLocation(islandWorld: IslandWorld): Location {
         val islandCount = 0 // TODO: Query the database to see how many islands there are
         val islandDistance = 30 // TODO: Probably make this 1500 or something along those lines
-        val islandHeight = 64.0 // TODO: Setting per island type
 
         if (islandCount == 0)
-            return Location(world, 0.0, islandHeight, 0.0)
+            return Location(islandWorld.world, 0.0, islandWorld.islandHeight.toDouble(), 0.0)
 
         val n = islandCount - 1
         val r = floor((sqrt(n + 1.0) - 1) / 2) + 1
@@ -54,7 +53,27 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
             }
         }
 
-        return Location(world, x * islandDistance, islandHeight, z * islandDistance)
+        return Location(islandWorld.world, x * islandDistance, islandWorld.islandHeight.toDouble(), z * islandDistance)
+    }
+
+    /**
+     * Gets the smallest positive integer greater than 0 from a list
+     *
+     * @param existingIds The list containing non-available ids
+     * @return The smallest positive integer not in the given list
+     */
+    fun getNextIslandId(existingIds: Collection<Int>): Int {
+        val copy = existingIds.sorted().toMutableList()
+        copy.removeIf { it <= 0 }
+
+        var current = 1
+        for (i in copy) {
+            if (i == current) {
+                current++
+            } else break
+        }
+
+        return current
     }
 
 }

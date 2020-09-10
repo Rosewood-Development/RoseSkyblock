@@ -5,7 +5,7 @@ import dev.rosewood.rosegarden.config.CommentedFileConfiguration
 import dev.rosewood.rosegarden.config.RoseSetting
 import dev.rosewood.rosegarden.manager.AbstractConfigurationManager
 import dev.rosewood.roseskyblock.RoseSkyblock
-import dev.rosewood.roseskyblock.extension.getManager
+import dev.rosewood.roseskyblock.util.getManager
 
 class ConfigurationManager(rosePlugin: RosePlugin) : AbstractConfigurationManager(rosePlugin, Setting::class.java) {
 
