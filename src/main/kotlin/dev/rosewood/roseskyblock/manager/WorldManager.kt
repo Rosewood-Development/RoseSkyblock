@@ -3,6 +3,7 @@ package dev.rosewood.roseskyblock.manager
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.config.CommentedFileConfiguration
 import dev.rosewood.rosegarden.manager.Manager
+import dev.rosewood.roseskyblock.util.parseEnum
 import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import dev.rosewood.roseskyblock.world.PortalLinks
@@ -19,7 +20,10 @@ import org.bukkit.block.Biome
 
 class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
-    private val worldGroups: MutableList<IslandWorldGroup> = mutableListOf()
+    private val _worldGroups: MutableList<IslandWorldGroup> = mutableListOf()
+    val worldGroups: List<IslandWorldGroup>
+        get() = this._worldGroups.toList()
+
     private var hasReloaded = false
 
     override fun reload() {
@@ -36,14 +40,14 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                 val displayName = groupSection.getString("name") ?: error("${worldGroupName}.name")
                 val startingWorldName = groupSection.getString("starting-world") ?: error("${worldGroupName}.starting-world")
                 var startingWorld: IslandWorld? = null
-                val gamemode = this.parseEnum(GameMode::class, (groupSection.getString("gamemode") ?: error("${worldGroupName}.gamemode")).toUpperCase())
+                val gamemode = parseEnum(GameMode::class, (groupSection.getString("gamemode") ?: error("${worldGroupName}.gamemode")).toUpperCase())
                 val islandWorlds: MutableList<IslandWorld> = mutableListOf()
                 val worldsSection = groupSection.getConfigurationSection("worlds") ?: error("${worldGroupName}.worlds")
                 worldsSection.getKeys(false).forEach { worldName ->
                     val worldSection = worldsSection.getConfigurationSection(worldName) ?: error("${worldGroupName}.worlds.$worldName")
                     val worldDisplayName = worldSection.getString("name") ?: error("${worldGroupName}.worlds.${worldName}.name")
-                    val worldEnvironment = this.parseEnum(World.Environment::class, (worldSection.getString("environment") ?: error("${worldGroupName}.worlds.${worldName}.environment")).toUpperCase())
-                    val worldBiome = this.parseEnum(Biome::class, (worldSection.getString("biome") ?: error("${worldGroupName}.worlds.${worldName}.biome")).toUpperCase())
+                    val worldEnvironment = parseEnum(World.Environment::class, (worldSection.getString("environment") ?: error("${worldGroupName}.worlds.${worldName}.environment")).toUpperCase())
+                    val worldBiome = parseEnum(Biome::class, (worldSection.getString("biome") ?: error("${worldGroupName}.worlds.${worldName}.biome")).toUpperCase())
                     val worldGenerationSection = worldSection.getConfigurationSection("world-generation")
                     val worldChunkLayers: List<ChunkLayer> = if (worldGenerationSection == null) {
                         listOf()
@@ -95,7 +99,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                 if (startingWorld == null)
                     error("${worldGroupName}.starting-world does not match any worlds in this group")
 
-                this.worldGroups.add(IslandWorldGroup(
+                this._worldGroups.add(IslandWorldGroup(
                     worldGroupName,
                     displayName,
                     startingWorld!!,
@@ -108,7 +112,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         }
 
         // Create/Load worlds
-        this.worldGroups.forEach { worldGroup ->
+        this._worldGroups.forEach { worldGroup ->
             worldGroup.worlds.forEach { world ->
                 if (Bukkit.getWorld(world.worldName) == null) {
                     Bukkit.createWorld(
@@ -127,16 +131,8 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         }
     }
 
-    private fun <T : Enum<T>> parseEnum(enum: KClass<T>, value: String): T {
-        try {
-            return enum.java.enumConstants.first { it.name == value } ?: error("")
-        } catch (ex: Exception) {
-            error("Invalid ${enum.simpleName} specified: $value")
-        }
-    }
-
     override fun disable() {
-        this.worldGroups.clear()
+        this._worldGroups.clear()
     }
 
     // TODO
@@ -202,8 +198,8 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                 worldSection["portal-links"] = mutableListOf<String>()
             } else {
                 val portalsSection = worldSection.createSection("portal-links")
-                world.portalLinks.netherLinkWorldName.let { portalsSection["nether"] = it }
-                world.portalLinks.endLinkWorldName.let { portalsSection["end"] = it }
+                world.portalLinks.netherLinkWorldName?.let { portalsSection["nether"] = it }
+                world.portalLinks.endLinkWorldName?.let { portalsSection["end"] = it }
             }
             worldSection["island-height"] = world.islandHeight
         }
@@ -212,7 +208,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     }
 
     fun getIslandWorld(worldName: String): IslandWorld? {
-        for (worldGroup in this.worldGroups)
+        for (worldGroup in this._worldGroups)
             for (islandWorld in worldGroup.worlds)
                 if (islandWorld.worldName == worldName)
                     return islandWorld

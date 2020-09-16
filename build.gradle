@@ -39,7 +39,7 @@ dependencies {
     implementation 'dev.rosewood:rosegarden:1.0.4-SNAPSHOT'
     implementation 'dev.rosewood:guiframework:1.1.1'
     implementation 'io.papermc:paperlib:1.0.5'
-    implementation 'dev.jorel:commandapi-shade:4.1'
+    implementation 'dev.jorel:commandapi-shade:4.2'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 }
@@ -58,7 +58,7 @@ shadowJar {
 
 processResources {
     from (sourceSets.main.resources.srcDirs) {
-        include '**/*.yml'
+        include 'plugin.yml'
         filter ReplaceTokens, tokens: ["version": project.property("version")]
     }
 }

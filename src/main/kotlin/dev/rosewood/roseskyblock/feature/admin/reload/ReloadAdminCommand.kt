@@ -1,8 +1,8 @@
-package dev.rosewood.roseskyblock.island.feature.admin.reload
+package dev.rosewood.roseskyblock.feature.admin.reload
 
 import dev.rosewood.rosegarden.RosePlugin
-import dev.rosewood.roseskyblock.island.feature.SkyblockCommandArgument
-import dev.rosewood.roseskyblock.island.feature.admin.SkyblockAdminCommand
+import dev.rosewood.roseskyblock.command.SkyblockCommandArgument
+import dev.rosewood.roseskyblock.command.SkyblockAdminCommand
 import dev.rosewood.roseskyblock.manager.LocaleManager
 import dev.rosewood.roseskyblock.util.getManager
 import org.bukkit.command.CommandSender

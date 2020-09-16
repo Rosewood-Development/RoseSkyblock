@@ -1,4 +1,4 @@
-package dev.rosewood.roseskyblock.island.feature
+package dev.rosewood.roseskyblock.command
 
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.arguments.Argument

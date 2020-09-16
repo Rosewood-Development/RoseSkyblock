@@ -1,10 +1,10 @@
-package dev.rosewood.roseskyblock.island.feature.default
+package dev.rosewood.roseskyblock.feature.default
 
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.executors.CommandExecutor
 import dev.rosewood.rosegarden.RosePlugin
-import dev.rosewood.roseskyblock.island.feature.SkyblockCommand
-import dev.rosewood.roseskyblock.island.feature.SkyblockCommandArgument
+import dev.rosewood.roseskyblock.command.SkyblockCommand
+import dev.rosewood.roseskyblock.command.SkyblockCommandArgument
 import dev.rosewood.roseskyblock.manager.LocaleManager
 import dev.rosewood.roseskyblock.util.getManager
 

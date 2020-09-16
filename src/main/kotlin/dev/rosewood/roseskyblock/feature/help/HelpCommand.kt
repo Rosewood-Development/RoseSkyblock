@@ -1,8 +1,8 @@
-package dev.rosewood.roseskyblock.island.feature.help
+package dev.rosewood.roseskyblock.feature.help
 
 import dev.rosewood.rosegarden.RosePlugin
-import dev.rosewood.roseskyblock.island.feature.SkyblockCommand
-import dev.rosewood.roseskyblock.island.feature.SkyblockCommandArgument
+import dev.rosewood.roseskyblock.command.SkyblockCommand
+import dev.rosewood.roseskyblock.command.SkyblockCommandArgument
 import dev.rosewood.roseskyblock.manager.LocaleManager
 import dev.rosewood.roseskyblock.util.getManager
 import org.bukkit.command.CommandSender

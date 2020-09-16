@@ -1,9 +1,9 @@
-package dev.rosewood.roseskyblock.island.feature.admin
+package dev.rosewood.roseskyblock.command
 
 import dev.jorel.commandapi.arguments.LiteralArgument
 import dev.rosewood.rosegarden.RosePlugin
-import dev.rosewood.roseskyblock.island.feature.SkyblockCommand
-import dev.rosewood.roseskyblock.island.feature.SkyblockCommandArgument
+import dev.rosewood.roseskyblock.command.SkyblockCommand
+import dev.rosewood.roseskyblock.command.SkyblockCommandArgument
 
 abstract class SkyblockAdminCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
 

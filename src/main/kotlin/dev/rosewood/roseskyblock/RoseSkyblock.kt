@@ -6,6 +6,7 @@ import dev.rosewood.rosegarden.database.DataMigration
 import dev.rosewood.rosegarden.manager.Manager
 import dev.rosewood.rosegarden.utils.NMSUtil
 import dev.rosewood.roseskyblock.database.migrations._1_Create_Table_Island
+import dev.rosewood.roseskyblock.database.migrations._3_Create_Table_Island_Group
 import dev.rosewood.roseskyblock.database.migrations._2_Create_Table_Island_Member
 import dev.rosewood.roseskyblock.manager.CommandManager
 import dev.rosewood.roseskyblock.manager.ConfigurationManager
@@ -71,7 +72,8 @@ class RoseSkyblock : RosePlugin(
     override fun getDataMigrations(): List<Class<out DataMigration>> {
         return listOf(
             _1_Create_Table_Island::class.java,
-            _2_Create_Table_Island_Member::class.java
+            _2_Create_Table_Island_Member::class.java,
+            _3_Create_Table_Island_Group::class.java,
         )
     }
 
