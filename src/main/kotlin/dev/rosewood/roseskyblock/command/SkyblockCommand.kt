@@ -30,10 +30,9 @@ abstract class SkyblockCommand(protected val rosePlugin: RosePlugin) {
             error("Tried to register a command with no executor")
 
         val names = listOf(this.name, *this.aliases.toTypedArray())
+        val commandArgs = mutableListOf<Argument>()
+        val args = mutableListOf<SkyblockCommandArgument>()
 
-        val commandArgs: MutableList<Argument> = mutableListOf()
-
-        val args: MutableList<SkyblockCommandArgument> = mutableListOf()
         args.addAll(this.prependedArguments)
         args.add(SkyblockCommandArgument(MultiLiteralArgument(*names.toTypedArray()), false))
         args.addAll(this.arguments)

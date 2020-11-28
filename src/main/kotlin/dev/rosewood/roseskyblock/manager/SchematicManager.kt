@@ -19,10 +19,11 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     override fun reload() {
         val schematicFolder = File(this.rosePlugin.dataFolder, "schematics")
         val schematicsFile = File(this.rosePlugin.dataFolder, "schematics.yml")
+
         val exists = schematicsFile.exists()
         val schematicsConfig = CommentedFileConfiguration.loadConfiguration(schematicsFile)
         if (!exists) {
-            //this.rosePlugin.copyResourceTo("default.schem", schematicFolder)
+            this.rosePlugin.copyResourceTo("default.schem", File(schematicFolder, "default.schem"))
             this.saveDefaults(schematicsConfig)
         }
 

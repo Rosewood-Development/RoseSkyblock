@@ -30,7 +30,7 @@ fun <T : Enum<T>> parseEnum(enum: KClass<T>, value: String): T {
 }
 
 fun JavaPlugin.copyResourceTo(resourcePath: String, outputDirectory: File) {
-    outputDirectory.mkdirs()
+    outputDirectory.parentFile.mkdirs()
 
     val resource = this.getResource(resourcePath)
     requireNotNull(resource) { "Resource does not exist in jar." }
