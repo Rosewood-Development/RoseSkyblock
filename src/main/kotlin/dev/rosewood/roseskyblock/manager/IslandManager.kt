@@ -15,7 +15,6 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     }
 
 
-
     /**
      * Gets the smallest positive integer greater than 0 from a list
      *
@@ -36,4 +35,26 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         return current
     }
 
+    /**
+     * Checks if the player already has an island.
+     *
+     * @param player The player being checked.
+     * @return true if player has an Island.
+     */
+    fun hasIsland(player: Player): Boolean {
+        var hasIsland = false
+        val dataManager = this.rosePlugin.getManager(DataManager::class.java)
+
+        dataManager.databaseConnector.connect { connection ->
+            val checkIsland = "SELECT owner_uuid FROM ${dataManager.tablePrefix}island_group WHERE owner_uuid = ?"
+            connection.prepareStatement(checkIsland).use {
+                it.setString(1, player.uniqueId.toString())
+                val result = it.executeQuery()
+                if (result.next())
+                    hasIsland = result.getBoolean(1)
+            }
+        }
+
+        return hasIsland
+    }
 }

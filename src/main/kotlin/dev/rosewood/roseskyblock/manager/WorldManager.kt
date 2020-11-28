@@ -20,7 +20,7 @@ import org.bukkit.block.Biome
 
 class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
-    private val _worldGroups: MutableList<IslandWorldGroup> = mutableListOf()
+    private val _worldGroups = mutableListOf<IslandWorldGroup>()
     val worldGroups: List<IslandWorldGroup>
         get() = this._worldGroups.toList()
 

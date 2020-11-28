@@ -5,6 +5,7 @@ import dev.rosewood.roseskyblock.command.SkyblockCommand
 import dev.rosewood.roseskyblock.command.SkyblockCommandArgument
 import dev.rosewood.roseskyblock.command.argument.IslandSchematicArgument
 import dev.rosewood.roseskyblock.command.argument.IslandWorldGroupArgument
+import dev.rosewood.roseskyblock.manager.IslandManager
 import dev.rosewood.roseskyblock.util.getNextIslandLocation
 import dev.rosewood.roseskyblock.world.IslandSchematic
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
@@ -27,7 +28,7 @@ class CreateCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
             val worldGroup = args[1] as IslandWorldGroup
             val schematic = args[2] as IslandSchematic
 
-            // TODO: Check if player has island
+            //this.rosePlugin.getManager(IslandManager::class.java).hasIsland(player)
 
             val pasteLocation = getNextIslandLocation(0, worldGroup.startingWorld)
             schematic.paste(this.rosePlugin, pasteLocation)
