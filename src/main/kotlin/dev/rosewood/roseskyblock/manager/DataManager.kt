@@ -45,7 +45,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
     fun saveNewIsland(islandGroup: IslandGroup, islandWorld: IslandWorld, spawnLocation: Location): Island {
         lateinit var island: Island
         this.databaseConnector.connect { connection ->
-            val insertGroup = "INSERT INTO ${this.tablePrefix}island (group_id, world, spawn_x, spawn_y, spawn_z, spawn_pitch, spawn_yaw) VALUES (?, ?, ?)"
+            val insertGroup = "INSERT INTO ${this.tablePrefix}island (group_id, world, spawn_x, spawn_y, spawn_z, spawn_pitch, spawn_yaw) VALUES (?, ?, ?, ?, ?, ?, ?)"
             connection.prepareStatement(insertGroup, Statement.RETURN_GENERATED_KEYS).use {
                 it.setInt(1, islandGroup.groupId)
                 it.setString(2, islandWorld.worldName)
