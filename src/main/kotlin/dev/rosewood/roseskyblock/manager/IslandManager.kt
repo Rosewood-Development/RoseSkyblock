@@ -46,7 +46,7 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         val dataManager = this.rosePlugin.getManager(DataManager::class.java)
 
         dataManager.databaseConnector.connect { connection ->
-            val checkIsland = "SELECT owner_uuid FROM ${dataManager.tablePrefix}island_group WHERE owner_uuid = ?"
+            val checkIsland = "SELECT player_uuid FROM ${dataManager.tablePrefix}island_member WHERE player_uuid = ?"
             connection.prepareStatement(checkIsland).use {
                 it.setString(1, player.uniqueId.toString())
                 val result = it.executeQuery()
