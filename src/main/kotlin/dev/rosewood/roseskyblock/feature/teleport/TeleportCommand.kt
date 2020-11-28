@@ -14,7 +14,7 @@ class TeleportCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
     override val aliases: Collection<String>
         get() = listOf("tp", "go", "home")
     override val arguments: List<SkyblockCommandArgument>
-        get() = listOf(SkyblockCommandArgument("world", StringArgument(), true))
+        get() = listOf(SkyblockCommandArgument(StringArgument("world"), true))
 
     override val executePlayer: (player: Player, args: Array<Any>) -> Unit
         get() = { player, args ->

@@ -9,7 +9,7 @@ import dev.rosewood.roseskyblock.world.IslandSchematic
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import org.bukkit.Bukkit
 
-class IslandSchematicArgument(rosePlugin: RosePlugin) : CustomArgument<IslandSchematic>({ input ->
+class IslandSchematicArgument(rosePlugin: RosePlugin) : CustomArgument<IslandSchematic>("schematic", { input ->
     val schematicManager = rosePlugin.getManager(SchematicManager::class)
 
     schematicManager.schematics[input.toLowerCase()]

@@ -8,7 +8,7 @@ import dev.rosewood.roseskyblock.command.SkyblockCommandArgument
 abstract class SkyblockAdminCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
 
     override val prependedArguments: List<SkyblockCommandArgument> = listOf(
-        SkyblockCommandArgument("admin", LiteralArgument("admin"), false)
+        SkyblockCommandArgument(LiteralArgument("admin"), false)
     )
 
 }

@@ -2,4 +2,4 @@ package dev.rosewood.roseskyblock.command
 
 import dev.jorel.commandapi.arguments.Argument
 
-class SkyblockCommandArgument(val name: String, val type: Argument, val optional: Boolean)
+class SkyblockCommandArgument(val argument: Argument, val optional: Boolean)

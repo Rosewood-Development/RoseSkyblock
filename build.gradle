@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.4.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.20'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
@@ -32,14 +32,14 @@ repositories {
 }
 
 dependencies {
-    shadow 'org.spigotmc:spigot:1.16.2'
+    shadow 'org.spigotmc:spigot:1.16.4'
     shadow 'com.sk89q.worldedit:worldedit-bukkit:7.2.0-SNAPSHOT'
     shadow 'me.clip:placeholderapi:2.10.4'
 
-    implementation 'dev.rosewood:rosegarden:1.0.4-SNAPSHOT'
+    implementation 'dev.rosewood:rosegarden:1.0.5-SNAPSHOT'
     implementation 'dev.rosewood:guiframework:1.1.1'
     implementation 'io.papermc:paperlib:1.0.5'
-    implementation 'dev.jorel:commandapi-shade:4.2'
+    implementation 'dev.jorel:commandapi-shade:5.3'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 }

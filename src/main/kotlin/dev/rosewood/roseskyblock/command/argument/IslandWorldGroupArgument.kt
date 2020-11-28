@@ -6,7 +6,7 @@ import dev.rosewood.roseskyblock.manager.WorldManager
 import dev.rosewood.roseskyblock.util.getManager
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 
-class IslandWorldGroupArgument(rosePlugin: RosePlugin) : CustomArgument<IslandWorldGroup>({ input ->
+class IslandWorldGroupArgument(rosePlugin: RosePlugin) : CustomArgument<IslandWorldGroup>("worldGroup", { input ->
     val worldManager = rosePlugin.getManager(WorldManager::class)
 
     worldManager.worldGroups.find { it.name.equals(input, true) }

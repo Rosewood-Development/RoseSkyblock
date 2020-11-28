@@ -31,11 +31,11 @@ abstract class SkyblockCommand(protected val rosePlugin: RosePlugin) {
 
         val names = listOf(this.name, *this.aliases.toTypedArray())
 
-        val commandArgs: LinkedHashMap<String, Argument> = LinkedHashMap()
+        val commandArgs: MutableList<Argument> = mutableListOf()
 
         val args: MutableList<SkyblockCommandArgument> = mutableListOf()
         args.addAll(this.prependedArguments)
-        args.add(SkyblockCommandArgument(this.name, MultiLiteralArgument(*names.toTypedArray()), false))
+        args.add(SkyblockCommandArgument(MultiLiteralArgument(*names.toTypedArray()), false))
         args.addAll(this.arguments)
 
         var previousOptional = false
@@ -46,7 +46,7 @@ abstract class SkyblockCommand(protected val rosePlugin: RosePlugin) {
             if (arg.optional)
                 this.registerCommands(commandArgs)
 
-            commandArgs[arg.name] = arg.type
+            commandArgs.add(arg.argument)
             previousOptional = arg.optional
         }
 
@@ -55,7 +55,7 @@ abstract class SkyblockCommand(protected val rosePlugin: RosePlugin) {
         this.registered = true
     }
 
-    private fun registerCommands(arguments: LinkedHashMap<String, Argument>) {
+    private fun registerCommands(arguments: List<Argument>) {
         // A bit of a hack to get aliases to work properly
         // This is probably polluting the command map, but it works for now
         listOf("skyblock", "sb", "is", "island", "rsb", "roseskyblock").forEach { commandName ->
