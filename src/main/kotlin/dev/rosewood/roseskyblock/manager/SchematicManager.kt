@@ -12,7 +12,7 @@ import org.bukkit.Material
 
 class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
-    private val _schematics: MutableMap<String, IslandSchematic> = mutableMapOf()
+    private val _schematics = mutableMapOf<String, IslandSchematic>()
     val schematics: Map<String, IslandSchematic>
         get() = this._schematics.toMap()
 

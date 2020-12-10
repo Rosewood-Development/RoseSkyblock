@@ -10,7 +10,6 @@ import dev.rosewood.roseskyblock.world.PortalLinks
 import dev.rosewood.roseskyblock.world.generator.ChunkLayer
 import dev.rosewood.roseskyblock.world.generator.LayeredChunkGenerator
 import java.io.File
-import kotlin.reflect.KClass
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material

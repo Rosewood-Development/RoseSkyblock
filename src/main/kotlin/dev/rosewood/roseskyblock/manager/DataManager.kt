@@ -11,6 +11,7 @@ import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import java.sql.Statement
 import java.util.UUID
 import org.bukkit.Location
+import org.bukkit.entity.Player
 
 class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
 
@@ -65,5 +66,30 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
         }
         return island
     }
+
+    /**
+     * Checks if the player already has an island.
+     *
+     * @param player The player being checked.
+     * @return true if player has an Island.
+     */
+    fun hasIsland(player: Player): Boolean {
+        var hasIsland = false
+        val dataManager = this.rosePlugin.getManager(DataManager::class.java)
+
+        dataManager.databaseConnector.connect { connection ->
+            val checkIsland = "SELECT 1 FROM ${dataManager.tablePrefix}island_member WHERE player_uuid = ?"
+            connection.prepareStatement(checkIsland).use {
+                it.setString(1, player.uniqueId.toString())
+                val result = it.executeQuery()
+                if (result.next())
+                    hasIsland = result.getBoolean(1)
+            }
+        }
+
+        return hasIsland
+    }
+
+
 
 }

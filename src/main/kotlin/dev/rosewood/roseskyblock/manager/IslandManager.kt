@@ -2,9 +2,18 @@ package dev.rosewood.roseskyblock.manager
 
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.manager.Manager
+import dev.rosewood.roseskyblock.island.IslandGroup
+import dev.rosewood.roseskyblock.world.IslandWorldGroup
+import java.util.UUID
+import java.util.concurrent.CompletableFuture
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 
 class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
+
+    private val _islandGroups = mutableMapOf<UUID, MutableMap<IslandWorldGroup, IslandGroup>>()
+    val islandGroups: Map<UUID, Map<IslandWorldGroup, IslandGroup>>
+        get() = this._islandGroups.toMap()
 
     override fun reload() {
 
@@ -13,7 +22,6 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     override fun disable() {
 
     }
-
 
     /**
      * Gets the smallest positive integer greater than 0 from a list
@@ -35,26 +43,12 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         return current
     }
 
-    /**
-     * Checks if the player already has an island.
-     *
-     * @param player The player being checked.
-     * @return true if player has an Island.
-     */
-    fun hasIsland(player: Player): Boolean {
-        var hasIsland = false
-        val dataManager = this.rosePlugin.getManager(DataManager::class.java)
+//    fun loadIslandData(owner: OfflinePlayer): CompletableFuture<Map<IslandWorldGroup, IslandGroup>> {
+//
+//    }
+//
+//    fun unloadIslandData(owner: OfflinePlayer) {
+//
+//    }
 
-        dataManager.databaseConnector.connect { connection ->
-            val checkIsland = "SELECT player_uuid FROM ${dataManager.tablePrefix}island_member WHERE player_uuid = ?"
-            connection.prepareStatement(checkIsland).use {
-                it.setString(1, player.uniqueId.toString())
-                val result = it.executeQuery()
-                if (result.next())
-                    hasIsland = result.getBoolean(1)
-            }
-        }
-
-        return hasIsland
-    }
 }

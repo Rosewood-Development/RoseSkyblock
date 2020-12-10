@@ -8,6 +8,7 @@ import java.nio.file.Files
 import kotlin.math.floor
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -20,6 +21,10 @@ import org.bukkit.plugin.java.JavaPlugin
  * @return A new or existing instance of the given manager class
  */
 fun <T : Manager> RosePlugin.getManager(managerClass: KClass<T>): T = this.getManager(managerClass.java)
+
+fun RosePlugin.runAsync(function: () -> Unit) = Bukkit.getScheduler().runTaskAsynchronously(this, function)
+
+fun RosePlugin.runSync(function: () -> Unit) = Bukkit.getScheduler().runTask(this, function)
 
 fun <T : Enum<T>> parseEnum(enum: KClass<T>, value: String): T {
     try {
