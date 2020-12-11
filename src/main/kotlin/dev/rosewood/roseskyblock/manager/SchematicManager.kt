@@ -65,4 +65,11 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         config.save()
     }
 
+    fun getSchematic(name: String): IslandSchematic? {
+        for (schematic in this.schematics.values)
+            if (schematic.name.equals(name, ignoreCase = true))
+                return schematic
+        return null
+    }
+
 }

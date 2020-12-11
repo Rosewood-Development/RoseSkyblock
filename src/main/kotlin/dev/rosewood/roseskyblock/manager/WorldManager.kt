@@ -207,10 +207,17 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     }
 
     fun getIslandWorld(worldName: String): IslandWorld? {
-        for (worldGroup in this._worldGroups)
+        for (worldGroup in this.worldGroups)
             for (islandWorld in worldGroup.worlds)
-                if (islandWorld.worldName == worldName)
+                if (islandWorld.worldName.equals(worldName, ignoreCase = true))
                     return islandWorld
+        return null
+    }
+
+    fun getIslandWorldGroup(groupName: String): IslandWorldGroup? {
+        for (worldGroup in this.worldGroups)
+            if (worldGroup.name.equals(groupName, ignoreCase = true))
+                return worldGroup
         return null
     }
 
