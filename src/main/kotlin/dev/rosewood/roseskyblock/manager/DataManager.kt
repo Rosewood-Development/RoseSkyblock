@@ -5,20 +5,20 @@ import dev.rosewood.rosegarden.manager.AbstractDataManager
 import dev.rosewood.roseskyblock.island.Island
 import dev.rosewood.roseskyblock.island.IslandGroup
 import dev.rosewood.roseskyblock.island.IslandMemberLevel
-import dev.rosewood.roseskyblock.world.IslandSchematic
 import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import java.sql.Statement
-import java.util.UUID
 import org.bukkit.Location
-import org.bukkit.entity.Player
+import org.bukkit.OfflinePlayer
+import java.util.*
 
 class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
 
     fun saveNewIslandGroup(worldGroup: IslandWorldGroup, ownerUniqueId: UUID, locationId: Int): IslandGroup {
         lateinit var islandGroup: IslandGroup
         this.databaseConnector.connect { connection ->
-            val insertGroup = "INSERT INTO ${this.tablePrefix}island_group (group_name, owner_uuid, location_id) VALUES (?, ?, ?)"
+            val insertGroup =
+                "INSERT INTO ${this.tablePrefix}island_group (group_name, owner_uuid, location_id) VALUES (?, ?, ?)"
             connection.prepareStatement(insertGroup, Statement.RETURN_GENERATED_KEYS).use {
                 it.setString(1, worldGroup.name)
                 it.setString(2, ownerUniqueId.toString())
@@ -29,10 +29,18 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
                 keys.next()
 
                 val groupId = keys.getInt(1)
-                islandGroup = IslandGroup(worldGroup, groupId, ownerUniqueId, locationId, listOf(), mapOf(Pair(ownerUniqueId, IslandMemberLevel.OWNER)))
+                islandGroup = IslandGroup(
+                    worldGroup,
+                    groupId,
+                    ownerUniqueId,
+                    locationId,
+                    listOf(),
+                    mapOf(Pair(ownerUniqueId, IslandMemberLevel.OWNER))
+                )
             }
 
-            val insertMember = "INSERT INTO ${this.tablePrefix}island_member (group_id, player_uuid, member_level) VALUES (?, ?, ?)"
+            val insertMember =
+                "INSERT INTO ${this.tablePrefix}island_member (group_id, player_uuid, member_level) VALUES (?, ?, ?)"
             connection.prepareStatement(insertMember).use {
                 it.setInt(1, islandGroup.groupId)
                 it.setString(2, ownerUniqueId.toString())
@@ -46,7 +54,8 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
     fun saveNewIsland(islandGroup: IslandGroup, islandWorld: IslandWorld, spawnLocation: Location): Island {
         lateinit var island: Island
         this.databaseConnector.connect { connection ->
-            val insertGroup = "INSERT INTO ${this.tablePrefix}island (group_id, world, spawn_x, spawn_y, spawn_z, spawn_pitch, spawn_yaw) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            val insertGroup =
+                "INSERT INTO ${this.tablePrefix}island (group_id, world, spawn_x, spawn_y, spawn_z, spawn_pitch, spawn_yaw) VALUES (?, ?, ?, ?, ?, ?, ?)"
             connection.prepareStatement(insertGroup, Statement.RETURN_GENERATED_KEYS).use {
                 it.setInt(1, islandGroup.groupId)
                 it.setString(2, islandWorld.worldName)
@@ -67,29 +76,75 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
         return island
     }
 
-    /**
-     * Checks if the player already has an island.
-     *
-     * @param player The player being checked.
-     * @return true if player has an Island.
-     */
-    fun hasIsland(player: Player): Boolean {
-        var hasIsland = false
-        val dataManager = this.rosePlugin.getManager(DataManager::class.java)
+    fun getIslandGroup(player: OfflinePlayer, worldGroup: IslandWorldGroup): Optional<IslandGroup> {
+        var islandGroup: Optional<IslandGroup> = Optional.empty()
+        this.databaseConnector.connect { connection ->
+            val selectGroup =
+                "SELECT group_id, location_id FROM ${this.tablePrefix}island_group WHERE group_name = ? AND owner_uuid = ?"
 
-        dataManager.databaseConnector.connect { connection ->
-            val checkIsland = "SELECT 1 FROM ${dataManager.tablePrefix}island_member WHERE player_uuid = ?"
-            connection.prepareStatement(checkIsland).use {
-                it.setString(1, player.uniqueId.toString())
+            var groupId: Int = -1
+            val islands = mutableListOf<Island>()
+            val members = mutableMapOf<UUID, IslandMemberLevel>()
+
+            connection.prepareStatement(selectGroup).use {
+                it.setString(1, worldGroup.name)
+                it.setString(2, player.uniqueId.toString())
                 val result = it.executeQuery()
-                if (result.next())
-                    hasIsland = result.getBoolean(1)
+                if (result.next()) {
+                    groupId = result.getInt("group_id")
+
+                    islandGroup = Optional.of(
+                        IslandGroup(
+                            worldGroup,
+                            groupId,
+                            player.uniqueId,
+                            result.getInt("location_id"),
+                            islands,
+                            members
+                        )
+                    )
+                }
+            }
+
+            if (!islandGroup.isPresent)
+                return@connect
+
+            val selectIslands = "SELECT * FROM ${this.tablePrefix}island WHERE group_id = ?"
+            connection.prepareStatement(selectIslands).use {
+                it.setInt(1, groupId)
+                val result = it.executeQuery()
+                while (result.next()) {
+                    val world = worldGroup.worlds.first { world -> world.worldName == result.getString("world") }
+                    islands.add(
+                        Island(
+                            islandGroup.get(),
+                            result.getInt("id"),
+                            world,
+                            Location(
+                                world.world,
+                                result.getDouble("spawn_x"),
+                                result.getDouble("spawn_y"),
+                                result.getDouble("spawn_z"),
+                                result.getFloat("spawn_yaw"),
+                                result.getFloat("spawn_pitch")
+                            )
+                        )
+                    )
+                }
+            }
+
+            val selectMembers = "SELECT * FROM ${this.tablePrefix}island_member WHERE group_id = ?"
+            connection.prepareStatement(selectMembers).use {
+                it.setInt(1, groupId)
+                val result = it.executeQuery()
+                while (result.next()) {
+                    val uuid = UUID.fromString(result.getString("player_uuid"))
+                    val memberLevel = IslandMemberLevel.valueOf(result.getString("member_level"))
+                    members[uuid] = memberLevel
+                }
             }
         }
-
-        return hasIsland
+        return islandGroup
     }
-
-
 
 }

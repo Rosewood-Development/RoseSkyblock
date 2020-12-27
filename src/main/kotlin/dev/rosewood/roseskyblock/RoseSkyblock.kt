@@ -7,6 +7,7 @@ import dev.rosewood.rosegarden.utils.NMSUtil
 import dev.rosewood.roseskyblock.database.migrations._1_Create_Table_Island
 import dev.rosewood.roseskyblock.database.migrations._2_Create_Table_Island_Member
 import dev.rosewood.roseskyblock.database.migrations._3_Create_Table_Island_Group
+import dev.rosewood.roseskyblock.listener.PlayerListener
 import dev.rosewood.roseskyblock.manager.CommandManager
 import dev.rosewood.roseskyblock.manager.ConfigurationManager
 import dev.rosewood.roseskyblock.manager.DataManager
@@ -44,6 +45,8 @@ class RoseSkyblock : RosePlugin(
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
+
+        Bukkit.getPluginManager().registerEvents(PlayerListener(this), this)
     }
 
     override fun disable() {
