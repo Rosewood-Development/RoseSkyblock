@@ -36,7 +36,7 @@ class ConfigurationManager(rosePlugin: RosePlugin) : AbstractConfigurationManage
         }
 
         override fun getBaseConfig(): CommentedFileConfiguration? {
-            return RoseSkyblock.instance.getManager(ConfigurationManager::class).config
+            return RoseSkyblock.instance.getManager<ConfigurationManager>().config
         }
 
     }
@@ -51,5 +51,4 @@ class ConfigurationManager(rosePlugin: RosePlugin) : AbstractConfigurationManage
             "             \\/           \\/     \\/        \\/     \\/\\/          \\/                 \\/     \\/"
         )
     }
-
 }

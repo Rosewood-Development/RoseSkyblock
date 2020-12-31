@@ -8,5 +8,4 @@ import org.bukkit.command.CommandSender
 abstract class SkyblockCommand(protected val rosePlugin: RosePlugin) {
 
     abstract fun create(manager: CommandManager<CommandSender>, builder: Command.Builder<CommandSender>)
-
 }

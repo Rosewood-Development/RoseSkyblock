@@ -12,7 +12,7 @@ class HelpCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
 
     override fun create(manager: CommandManager<CommandSender>, builder: Command.Builder<CommandSender>) {
         manager.command(builder.literal("help").handler { context ->
-            val localeManager = this.rosePlugin.getManager(LocaleManager::class)
+            val localeManager = this.rosePlugin.getManager<LocaleManager>()
             localeManager.sendMessage(context.sender, "command-help-title")
             localeManager.sendSimpleMessage(context.sender, "command-help-description")
             localeManager.sendSimpleMessage(context.sender, "command-reload-description")

@@ -6,6 +6,7 @@ import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.roseskyblock.command.SkyblockCommand
 import dev.rosewood.roseskyblock.command.argument.IslandSchematicArgument
 import dev.rosewood.roseskyblock.command.argument.IslandWorldGroupArgument
+import dev.rosewood.roseskyblock.manager.IslandManager
 import dev.rosewood.roseskyblock.util.getNextIslandLocation
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -21,8 +22,8 @@ class CreateCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
             .senderType(Player::class.java)
             .handler { context ->
                 val player = context.sender as Player
-                val worldGroup = context.get(worldGroupArgument)
-                val schematic = context.get(schematicArgument)
+                val worldGroup = context[worldGroupArgument]
+                val schematic = context[schematicArgument]
 
                 //this.rosePlugin.getManager(DataManager::class).hasIsland(player)
 

@@ -12,7 +12,7 @@ class DefaultCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
 
     override fun create(manager: CommandManager<CommandSender>, builder: Command.Builder<CommandSender>) {
         builder.handler { context ->
-            val localeManager = this.rosePlugin.getManager(LocaleManager::class)
+            val localeManager = rosePlugin.getManager<LocaleManager>()
             val baseColor: String = localeManager.getLocaleMessage("base-command-color")
             localeManager.sendCustomMessage(
                 context.sender,

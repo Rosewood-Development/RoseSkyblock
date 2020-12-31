@@ -30,5 +30,4 @@ class LayeredChunkGenerator(private val chunkLayers: List<ChunkLayer>, private v
     }
 
     override fun isParallelCapable(): Boolean = true
-
 }

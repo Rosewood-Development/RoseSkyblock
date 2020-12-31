@@ -8,6 +8,4 @@ class IslandWorldGroup(
     val startingWorld: IslandWorld,
     val gamemode: GameMode,
     val worlds: List<IslandWorld>
-) {
-
-}
+)

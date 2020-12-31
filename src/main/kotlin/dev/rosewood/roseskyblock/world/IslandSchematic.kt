@@ -19,7 +19,7 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
 
     fun paste(rosePlugin: RosePlugin, location: Location) {
         val clipboard: Clipboard
-        this.clipboardFormat.getReader(FileInputStream(this.file)).use { clipboard = it.read() }
+        clipboardFormat.getReader(FileInputStream(this.file)).use { clipboard = it.read() }
 
         val pasteTask = Runnable {
 //            WorldEdit.getInstance().newEditSessionBuilder().world(BukkitAdapter.adapt(location.world)).build().use {
@@ -35,18 +35,16 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
             // FastAsyncWorldEdit isn't updated to include the non-deprecated version yet
             @Suppress("DEPRECATION")
             WorldEdit.getInstance().editSessionFactory.getEditSession(BukkitAdapter.adapt(location.world), -1).use {
-                val operation = ClipboardHolder(clipboard)
+                Operations.complete(ClipboardHolder(clipboard)
                     .createPaste(it)
                     .to(BukkitAdapter.asBlockVector(location))
                     .copyEntities(true)
                     .ignoreAirBlocks(true)
-                    .build()
-                Operations.complete(operation)
+                    .build())
             }
         }
 
-        val pluginManager = Bukkit.getPluginManager()
-        if (pluginManager.isPluginEnabled("FastAsyncWorldEdit") || pluginManager.isPluginEnabled("AsyncWorldEdit")) {
+        if (Bukkit.getPluginManager().isPluginEnabled("FastAsyncWorldEdit") || Bukkit.getPluginManager().isPluginEnabled("AsyncWorldEdit")) {
             Bukkit.getScheduler().runTaskAsynchronously(rosePlugin, pasteTask)
         } else {
             pasteTask.run()

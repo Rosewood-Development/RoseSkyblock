@@ -20,6 +20,7 @@ import java.util.function.BiFunction
  *
  * @param <C> Command sender type
  */
+// not sure about this being a builder setup but I'll leave it for now
 class IslandWorldGroupArgument<C> private constructor(
     required: Boolean,
     name: String,
@@ -86,15 +87,11 @@ class IslandWorldGroupArgument<C> private constructor(
 
     }
 
-    class Builder<C>(name: String) : CommandArgument.Builder<C, IslandWorldGroup>(
-        IslandWorldGroup::class.java,
-        name
-    ) {
+    // just personal preference this one, I usually put this all on one line when it fits within the 120 char limit I set
+    // in IntelliJ
+    class Builder<C>(name: String) : CommandArgument.Builder<C, IslandWorldGroup>(IslandWorldGroup::class.java, name) {
 
-        override fun build(): CommandArgument<C, IslandWorldGroup> {
-            return IslandWorldGroupArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
-        }
-
+        override fun build() = IslandWorldGroupArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
     }
 
     class IslandWorldGroupParser<C> : ArgumentParser<C, IslandWorldGroup> {
@@ -111,7 +108,7 @@ class IslandWorldGroupArgument<C> private constructor(
                     )
                 )
 
-            val worldManager = RoseSkyblock.instance.getManager(WorldManager::class)
+            val worldManager = RoseSkyblock.instance.getManager<WorldManager>()
             val islandWorldGroup = worldManager.getIslandWorldGroup(input)
                 ?: return ArgumentParseResult.failure(IslandWorldGroupParseException(input, commandContext))
 
@@ -119,17 +116,15 @@ class IslandWorldGroupArgument<C> private constructor(
             return ArgumentParseResult.success(islandWorldGroup)
         }
 
-        override fun suggestions(commandContext: CommandContext<C>, input: String): List<String> {
-            return RoseSkyblock.instance.getManager(WorldManager::class).worldGroups.map { it.name }
-        }
-
+        // again personal preference, but I like to abuse expression functions like this
+        override fun suggestions(commandContext: CommandContext<C>, input: String)
+            = RoseSkyblock.instance.getManager<WorldManager>().worldGroups.map { it.name }
     }
 
-    class IslandWorldGroupParseException(val input: String, context: CommandContext<*>) : ParserException(
+    class IslandWorldGroupParseException(input: String, context: CommandContext<*>) : ParserException(
         IslandWorldGroupParser::class.java,
         context,
         SkyblockCaptionKeys.ARGUMENT_PARSE_FAILURE_ISLAND_WORLD_GROUP,
         CaptionVariable.of("input", input)
     )
-
 }

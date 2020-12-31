@@ -2,7 +2,7 @@ package dev.rosewood.roseskyblock.island
 
 import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
-import java.util.UUID
+import java.util.*
 
 class IslandGroup(
     val worldGroup: IslandWorldGroup,
@@ -13,21 +13,17 @@ class IslandGroup(
     members: Map<UUID, IslandMemberLevel>
 ) {
 
-    private val _islands: MutableList<Island> = mutableListOf()
-    val islands: List<Island>
-        get() = this._islands.toList()
+    // IJ suggested these two could be private
+    private val islands = mutableListOf<Island>()
 
-    private val _members: MutableMap<UUID, IslandMemberLevel> = mutableMapOf()
-    val members: Map<UUID, IslandMemberLevel>
-        get() = this._members.toMap()
+    private val members = mutableMapOf<UUID, IslandMemberLevel>()
 
     init {
-        this._islands.addAll(islands)
-        this._members.putAll(members)
+        this.islands.addAll(islands)
+        this.members.putAll(members)
     }
 
     fun unlockIsland(world: IslandWorld) {
-
+        TODO("Make this thingy do thingys")
     }
-
 }

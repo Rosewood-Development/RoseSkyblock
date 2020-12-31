@@ -76,8 +76,8 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
         return island
     }
 
-    fun getIslandGroup(player: OfflinePlayer, worldGroup: IslandWorldGroup): Optional<IslandGroup> {
-        var islandGroup: Optional<IslandGroup> = Optional.empty()
+    fun getIslandGroup(player: OfflinePlayer, worldGroup: IslandWorldGroup): IslandGroup? {
+        var islandGroup: IslandGroup? = null
         this.databaseConnector.connect { connection ->
             val selectGroup =
                 "SELECT group_id, location_id FROM ${this.tablePrefix}island_group WHERE group_name = ? AND owner_uuid = ?"
@@ -93,20 +93,18 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
                 if (result.next()) {
                     groupId = result.getInt("group_id")
 
-                    islandGroup = Optional.of(
-                        IslandGroup(
-                            worldGroup,
-                            groupId,
-                            player.uniqueId,
-                            result.getInt("location_id"),
-                            islands,
-                            members
-                        )
+                    islandGroup = IslandGroup(
+                        worldGroup,
+                        groupId,
+                        player.uniqueId,
+                        result.getInt("location_id"),
+                        islands,
+                        members
                     )
                 }
             }
 
-            if (!islandGroup.isPresent)
+            if (islandGroup == null)
                 return@connect
 
             val selectIslands = "SELECT * FROM ${this.tablePrefix}island WHERE group_id = ?"
@@ -117,7 +115,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
                     val world = worldGroup.worlds.first { world -> world.worldName == result.getString("world") }
                     islands.add(
                         Island(
-                            islandGroup.get(),
+                            islandGroup!!,
                             result.getInt("id"),
                             world,
                             Location(

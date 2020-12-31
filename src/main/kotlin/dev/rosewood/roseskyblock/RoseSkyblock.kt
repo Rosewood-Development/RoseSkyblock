@@ -50,7 +50,7 @@ class RoseSkyblock : RosePlugin(
     }
 
     override fun disable() {
-
+        TODO("Make this thingy do thingys")
     }
 
     override fun getManagerLoadPriority(): List<Class<out Manager>> {
@@ -69,5 +69,4 @@ class RoseSkyblock : RosePlugin(
             _3_Create_Table_Island_Group::class.java,
         )
     }
-
 }

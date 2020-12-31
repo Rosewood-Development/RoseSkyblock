@@ -112,8 +112,8 @@ class IslandSchematicArgument<C> private constructor(
                     )
                 )
 
-            val schematicManager = RoseSkyblock.instance.getManager(SchematicManager::class)
-            val schematic = schematicManager.getSchematic(input)
+            val schematicManager = RoseSkyblock.instance.getManager<SchematicManager>()
+            val schematic = schematicManager.schematics[input]
                 ?: return ArgumentParseResult.failure(IslandSchematicParseException(input, commandContext))
 
             inputQueue.remove()
@@ -121,16 +121,15 @@ class IslandSchematicArgument<C> private constructor(
         }
 
         override fun suggestions(commandContext: CommandContext<C>, input: String): List<String> {
-            return RoseSkyblock.instance.getManager(SchematicManager::class).schematics.values.map { it.name }
+            return RoseSkyblock.instance.getManager<SchematicManager>().schematics.values.map { it.name }
         }
 
     }
 
-    class IslandSchematicParseException(val input: String, context: CommandContext<*>) : ParserException(
+    class IslandSchematicParseException(input: String, context: CommandContext<*>) : ParserException(
         IslandSchematicParser::class.java,
         context,
         SkyblockCaptionKeys.ARGUMENT_PARSE_FAILURE_ISLAND_SCHEMATIC,
         CaptionVariable.of("input", input)
     )
-
 }

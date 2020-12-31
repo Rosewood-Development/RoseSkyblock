@@ -20,7 +20,7 @@ repositories {
     maven { url = 'https://repo.rosewooddev.io/repository/public/' }
 
     maven {
-        url = 'https://repo.rosewooddev.io/repository/maven-public'
+        url = 'https://repo.rosewooddev.io/repository/maven-public/'
         credentials {
             username project.mavenUser
             password project.mavenPassword

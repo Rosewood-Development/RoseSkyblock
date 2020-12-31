@@ -5,5 +5,4 @@ enum class IslandMemberLevel {
     OWNER,
     MEMBER,
     TRUSTED
-
 }

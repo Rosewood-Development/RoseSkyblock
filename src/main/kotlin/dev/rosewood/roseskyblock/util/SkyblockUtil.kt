@@ -16,11 +16,10 @@ import org.bukkit.plugin.java.JavaPlugin
  * Gets a manager instance.
  * Convenience method to avoid needing to put .java at the end of a KClass reference.
  *
- * @param managerClass The class of the manager to get
  * @param <T> extends Manager
  * @return A new or existing instance of the given manager class
  */
-fun <T : Manager> RosePlugin.getManager(managerClass: KClass<T>): T = this.getManager(managerClass.java)
+inline fun <reified T : Manager> RosePlugin.getManager(): T = getManager(T::class.java)
 
 fun RosePlugin.runAsync(function: () -> Unit) = Bukkit.getScheduler().runTaskAsynchronously(this, function)
 

@@ -1,10 +1,7 @@
 package dev.rosewood.roseskyblock.world
 
 import dev.rosewood.roseskyblock.world.generator.ChunkLayer
-import java.lang.ref.Reference
-import java.lang.ref.WeakReference
 import org.bukkit.Bukkit
-import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.block.Biome
 
@@ -19,6 +16,5 @@ class IslandWorld(
 ) {
 
     val world: World
-        get() = Bukkit.getWorld(this.worldName) ?: error("World ${this.worldName} is not loaded")
-
+        get() = Bukkit.getWorld(worldName) ?: error("World ${this.worldName} is not loaded")
 }

@@ -14,7 +14,7 @@ class EnglishLocale : Locale {
     }
 
     override fun getDefaultLocaleValues(): MutableMap<String, Any> {
-        return object: LinkedHashMap<String, Any>() { init {
+        return object : LinkedHashMap<String, Any>() { init {
             this["#0"] = "Plugin Message Prefix"
             this["prefix"] = "&7[<g:#8A2387:#E94057:#F27121>RoseSkyblock&7] "
 
@@ -31,5 +31,4 @@ class EnglishLocale : Locale {
             this["command-reload-reloaded"] = "&ePlugin data, configuration, and locale files were reloaded."
         }}
     }
-
 }

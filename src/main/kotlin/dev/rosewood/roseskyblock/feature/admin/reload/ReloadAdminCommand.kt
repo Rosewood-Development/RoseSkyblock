@@ -12,7 +12,7 @@ class ReloadAdminCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
 
     override fun create(manager: CommandManager<CommandSender>, builder: Command.Builder<CommandSender>) {
         manager.command(builder.literal("reload").handler { context ->
-            val localeManager = this.rosePlugin.getManager(LocaleManager::class)
+            val localeManager = this.rosePlugin.getManager<LocaleManager>()
             this.rosePlugin.reload()
             localeManager.sendMessage(context.sender, "command-reload-reloaded")
         })
