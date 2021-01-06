@@ -19,16 +19,16 @@ import org.bukkit.block.Biome
 
 class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
-    // no need to hide the mutable list, as we discussed
     val worldGroups = mutableListOf<IslandWorldGroup>()
 
     private var hasReloaded = false
 
     override fun reload() {
-        val worldsFile = File(rosePlugin.dataFolder, "worlds.yml")
+        val worldsFile = File(this.rosePlugin.dataFolder, "worlds.yml")
+        val exists = worldsFile.exists()
 
         val worldsConfig = CommentedFileConfiguration.loadConfiguration(worldsFile)
-        if (!worldsFile.exists()) saveDefaults(worldsConfig)
+        if (!exists) this.saveDefaults(worldsConfig)
 
         worldsConfig.getKeys(false).forEach { worldGroupName ->
             try {
@@ -95,7 +95,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                 if (startingWorld == null)
                     error("${worldGroupName}.starting-world does not match any worlds in this group")
 
-                worldGroups.add(IslandWorldGroup(
+                this.worldGroups.add(IslandWorldGroup(
                     worldGroupName,
                     displayName,
                     startingWorld!!,
@@ -108,7 +108,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         }
 
         // Create/Load worlds
-        worldGroups.forEach { worldGroup ->
+        this.worldGroups.forEach { worldGroup ->
             worldGroup.worlds.forEach { world ->
                 if (Bukkit.getWorld(world.worldName) == null) {
                     Bukkit.createWorld(
@@ -120,15 +120,15 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
             }
         }
 
-        if (hasReloaded) {
-            rosePlugin.logger.warning("The plugin was reloaded. If any changes were made to the worlds.yml file, you may need to restart your server for them to go into effect.")
+        if (this.hasReloaded) {
+            this.rosePlugin.logger.warning("The plugin was reloaded. If any changes were made to the worlds.yml file, you may need to restart your server for them to go into effect.")
         } else {
-            hasReloaded = true
+            this.hasReloaded = true
         }
     }
 
     override fun disable() {
-        worldGroups.clear()
+        this.worldGroups.clear()
     }
 
     // TODO
@@ -203,8 +203,9 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         config.save()
     }
 
+    @Suppress("unused")
     fun getIslandWorld(worldName: String): IslandWorld? {
-        for (worldGroup in worldGroups)
+        for (worldGroup in this.worldGroups)
             for (islandWorld in worldGroup.worlds)
                 if (islandWorld.worldName.equals(worldName, ignoreCase = true))
                     return islandWorld

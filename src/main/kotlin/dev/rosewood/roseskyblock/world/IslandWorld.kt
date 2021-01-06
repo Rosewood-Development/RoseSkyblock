@@ -5,7 +5,7 @@ import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.block.Biome
 
-class IslandWorld(
+data class IslandWorld(
     val worldName: String,
     val displayName: String,
     val environment: World.Environment,
@@ -16,5 +16,6 @@ class IslandWorld(
 ) {
 
     val world: World
-        get() = Bukkit.getWorld(worldName) ?: error("World ${this.worldName} is not loaded")
+        get() = Bukkit.getWorld(this.worldName) ?: error("World ${this.worldName} is not loaded")
+
 }

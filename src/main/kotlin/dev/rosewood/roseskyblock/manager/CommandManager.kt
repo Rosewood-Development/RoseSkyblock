@@ -58,25 +58,21 @@ class CommandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         val builder = this.manager.commandBuilder("skyblock", "sb", "is", "island", "rsb", "roseskyblock")
 
         listOf(
-            DefaultCommand(this.rosePlugin),
-            HelpCommand(this.rosePlugin),
-            CreateCommand(this.rosePlugin),
-            TeleportCommand(this.rosePlugin)
+            DefaultCommand(rosePlugin),
+            HelpCommand(rosePlugin),
+            CreateCommand(rosePlugin),
+            TeleportCommand(rosePlugin)
         ).forEach { it.create(this.manager, builder)}
 
         val adminBuilder = builder.literal("admin")
 
         listOf(
-            ReloadAdminCommand(this.rosePlugin)
+            ReloadAdminCommand(rosePlugin)
         ).forEach { it.create(this.manager, adminBuilder)}
     }
 
-    override fun reload() {
+    override fun reload() {}
 
-    }
-
-    override fun disable() {
-
-    }
+    override fun disable() {}
 
 }

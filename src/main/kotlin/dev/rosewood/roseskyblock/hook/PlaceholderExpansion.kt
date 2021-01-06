@@ -2,21 +2,22 @@ package dev.rosewood.roseskyblock.hook
 
 import dev.rosewood.rosegarden.RosePlugin
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
-import org.bukkit.entity.Player
+import org.bukkit.OfflinePlayer
 
+@Suppress("unused")
 class PlaceholderExpansion(private val rosePlugin: RosePlugin) : PlaceholderExpansion() {
 
-    override fun onPlaceholderRequest(p: Player?, placeholder: String): String? {
-        if (p == null)
-            return null
+    override fun onRequest(player: OfflinePlayer?, params: String): String {
+        if (player == null)
+            return ""
 
-        // We got nothing here yet :(
-        // sad :(
-        return null
+        return ""
     }
 
+    override fun canRegister() = true
     override fun persist() = true
-    override fun getIdentifier() = rosePlugin.description.name.toLowerCase()
-    override fun getAuthor(): String = rosePlugin.description.authors[0]
-    override fun getVersion() = rosePlugin.description.version
+    override fun getIdentifier() = this.rosePlugin.description.name.toLowerCase()
+    override fun getAuthor(): String = this.rosePlugin.description.authors[0]
+    override fun getVersion() = this.rosePlugin.description.version
+
 }

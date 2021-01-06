@@ -22,15 +22,6 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
         clipboardFormat.getReader(FileInputStream(this.file)).use { clipboard = it.read() }
 
         val pasteTask = Runnable {
-//            WorldEdit.getInstance().newEditSessionBuilder().world(BukkitAdapter.adapt(location.world)).build().use {
-//                val operation = ClipboardHolder(clipboard)
-//                    .createPaste(it)
-//                    .to(BukkitAdapter.asBlockVector(location))
-//                    .copyEntities(true)
-//                    .ignoreAirBlocks(true)
-//                    .build()
-//                Operations.complete(operation)
-//            }
 
             // FastAsyncWorldEdit isn't updated to include the non-deprecated version yet
             @Suppress("DEPRECATION")

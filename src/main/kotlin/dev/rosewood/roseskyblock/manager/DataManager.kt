@@ -12,6 +12,7 @@ import org.bukkit.Location
 import org.bukkit.OfflinePlayer
 import java.util.*
 
+@Suppress("unused")
 class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
 
     fun saveNewIslandGroup(worldGroup: IslandWorldGroup, ownerUniqueId: UUID, locationId: Int): IslandGroup {

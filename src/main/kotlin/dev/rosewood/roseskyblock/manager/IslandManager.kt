@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture
 import org.bukkit.OfflinePlayer
 import java.util.*
 
+@Suppress("unused")
 class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
     private val islandGroups = Collections.synchronizedMap(mutableMapOf<UUID, MutableMap<IslandWorldGroup, IslandGroup>>())
@@ -30,22 +31,17 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
      * @return The smallest positive integer not in the given list
      */
     fun getNextIslandId(existingIds: Collection<Int>): Int {
-        val copy = existingIds.sorted().toMutableList()
-        copy.removeIf { it <= 0 }
-
-        var current = 1
-        copy.forEach {
-            if (it == current) current++
+        val copy = existingIds.toMutableList()
+        for (i in 0..copy.size) {
+            while (copy[i] != i + 1) {
+                if (copy[i] <= 0 || copy[i] > copy.size || copy[i] == copy[copy[i] - 1]) break
+                val temp = copy[i]
+                copy[i] = copy[temp - 1]
+                copy[temp - 1] = temp
+            }
         }
-
-//        var current = 1
-//        for (i in copy) {
-//            if (i == current) {
-//                current++
-//            } else break
-//        }
-
-        return current
+        for (i in 0..copy.size) if (copy[i] != i + 1) return i + 1
+        return copy.size + 1
     }
 
     /**
@@ -56,12 +52,13 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
      */
     @Suppress("UNCHECKED_CAST")
     fun tryLoadIslands(owner: OfflinePlayer): CompletableFuture<Map<IslandWorldGroup, IslandGroup>> {
-        if (islandGroups.containsKey(owner.uniqueId)) return CompletableFuture.completedFuture(islandGroups[owner.uniqueId])
+        if (this.islandGroups.containsKey(owner.uniqueId))
+            return CompletableFuture.completedFuture(this.islandGroups[owner.uniqueId])
 
         return CompletableFuture.supplyAsync {
-            val dataManager = rosePlugin.getManager<DataManager>()
+            val dataManager = this.rosePlugin.getManager<DataManager>()
 
-            rosePlugin.getManager<WorldManager>().worldGroups.associateWith {
+            this.rosePlugin.getManager<WorldManager>().worldGroups.associateWith {
                 dataManager.getIslandGroup(owner, it)
             }.filterValues { it != null } as Map<IslandWorldGroup, IslandGroup>
         }
@@ -76,4 +73,5 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         // TODO: Check if island is still active, if so, don't unload it
         islandGroups.remove(owner.uniqueId)
     }
+
 }

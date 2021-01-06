@@ -19,7 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin
  * @param <T> extends Manager
  * @return A new or existing instance of the given manager class
  */
-inline fun <reified T : Manager> RosePlugin.getManager(): T = getManager(T::class.java)
+inline fun <reified T : Manager> RosePlugin.getManager(): T = this.getManager(T::class.java)
 
 fun RosePlugin.runAsync(function: () -> Unit) = Bukkit.getScheduler().runTaskAsynchronously(this, function)
 

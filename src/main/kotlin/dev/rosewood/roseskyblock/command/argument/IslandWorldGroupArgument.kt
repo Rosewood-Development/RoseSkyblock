@@ -20,7 +20,7 @@ import java.util.function.BiFunction
  *
  * @param <C> Command sender type
  */
-// not sure about this being a builder setup but I'll leave it for now
+@Suppress("MemberVisibilityCanBePrivate", "unused", "CanBeParameter")
 class IslandWorldGroupArgument<C> private constructor(
     required: Boolean,
     name: String,
@@ -45,9 +45,7 @@ class IslandWorldGroupArgument<C> private constructor(
          * @return Created builder
          */
         @JvmStatic
-        fun <C> newBuilder(name: String): CommandArgument.Builder<C, IslandWorldGroup> {
-            return Builder(name)
-        }
+        fun <C> newBuilder(name: String): CommandArgument.Builder<C, IslandWorldGroup> = Builder(name)
 
         /**
          * Create a new required argument
@@ -57,9 +55,7 @@ class IslandWorldGroupArgument<C> private constructor(
          * @return Created argument
          */
         @JvmStatic
-        fun <C> of(name: String): CommandArgument<C, IslandWorldGroup> {
-            return this.newBuilder<C>(name).asRequired().build()
-        }
+        fun <C> of(name: String) = this.newBuilder<C>(name).asRequired().build()
 
         /**
          * Create a new optional argument
@@ -68,9 +64,7 @@ class IslandWorldGroupArgument<C> private constructor(
          * @param <C>  Command sender type
          * @return Created argument
         </C> */
-        fun <C> optional(name: String): CommandArgument<C, IslandWorldGroup> {
-            return this.newBuilder<C>(name).asOptional().build()
-        }
+        fun <C> optional(name: String) = this.newBuilder<C>(name).asOptional().build()
 
         /**
          * Create a new optional argument with a default value
@@ -81,14 +75,10 @@ class IslandWorldGroupArgument<C> private constructor(
          * @return Created argument
          */
         @JvmStatic
-        fun <C> optional(name: String, defaultValue: String): CommandArgument<C, IslandWorldGroup> {
-            return this.newBuilder<C>(name).asOptionalWithDefault(defaultValue).build()
-        }
+        fun <C> optional(name: String, defaultValue: String) = this.newBuilder<C>(name).asOptionalWithDefault(defaultValue).build()
 
     }
 
-    // just personal preference this one, I usually put this all on one line when it fits within the 120 char limit I set
-    // in IntelliJ
     class Builder<C>(name: String) : CommandArgument.Builder<C, IslandWorldGroup>(IslandWorldGroup::class.java, name) {
 
         override fun build() = IslandWorldGroupArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
@@ -116,15 +106,16 @@ class IslandWorldGroupArgument<C> private constructor(
             return ArgumentParseResult.success(islandWorldGroup)
         }
 
-        // again personal preference, but I like to abuse expression functions like this
-        override fun suggestions(commandContext: CommandContext<C>, input: String)
-            = RoseSkyblock.instance.getManager<WorldManager>().worldGroups.map { it.name }
+        override fun suggestions(commandContext: CommandContext<C>, input: String): List<String> {
+            return RoseSkyblock.instance.getManager<WorldManager>().worldGroups.map { it.name }
+        }
     }
 
-    class IslandWorldGroupParseException(input: String, context: CommandContext<*>) : ParserException(
+    class IslandWorldGroupParseException(val input: String, context: CommandContext<*>) : ParserException(
         IslandWorldGroupParser::class.java,
         context,
         SkyblockCaptionKeys.ARGUMENT_PARSE_FAILURE_ISLAND_WORLD_GROUP,
         CaptionVariable.of("input", input)
     )
+
 }

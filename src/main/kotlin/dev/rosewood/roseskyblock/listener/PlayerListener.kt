@@ -9,6 +9,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
+@Suppress("unused") // the EventHandler methods are called reflectively by Bukkit internally
 class PlayerListener(private val rosePlugin: RosePlugin) : Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)

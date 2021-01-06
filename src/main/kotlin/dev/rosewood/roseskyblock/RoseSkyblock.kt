@@ -1,12 +1,10 @@
 package dev.rosewood.roseskyblock
 
 import dev.rosewood.rosegarden.RosePlugin
-import dev.rosewood.rosegarden.database.DataMigration
-import dev.rosewood.rosegarden.manager.Manager
 import dev.rosewood.rosegarden.utils.NMSUtil
-import dev.rosewood.roseskyblock.database.migrations._1_Create_Table_Island
-import dev.rosewood.roseskyblock.database.migrations._2_Create_Table_Island_Member
-import dev.rosewood.roseskyblock.database.migrations._3_Create_Table_Island_Group
+import dev.rosewood.roseskyblock.database.migrations.CreateIslandsTable
+import dev.rosewood.roseskyblock.database.migrations.CreateIslandMembersTable
+import dev.rosewood.roseskyblock.database.migrations.CreateIslandGroupsTable
 import dev.rosewood.roseskyblock.listener.PlayerListener
 import dev.rosewood.roseskyblock.manager.CommandManager
 import dev.rosewood.roseskyblock.manager.ConfigurationManager
@@ -24,12 +22,6 @@ class RoseSkyblock : RosePlugin(
     DataManager::class.java,
     LocaleManager::class.java
 ) {
-
-    companion object {
-        @JvmStatic
-        lateinit var instance: RoseSkyblock
-            private set
-    }
 
     override fun enable() {
         instance = this
@@ -53,20 +45,23 @@ class RoseSkyblock : RosePlugin(
         TODO("Make this thingy do thingys")
     }
 
-    override fun getManagerLoadPriority(): List<Class<out Manager>> {
-        return listOf(
-            CommandManager::class.java,
-            SchematicManager::class.java,
-            WorldManager::class.java,
-            IslandManager::class.java
-        )
+    override fun getManagerLoadPriority() = listOf(
+        CommandManager::class.java,
+        SchematicManager::class.java,
+        WorldManager::class.java,
+        IslandManager::class.java
+    )
+
+    override fun getDataMigrations() = listOf(
+        CreateIslandsTable::class.java,
+        CreateIslandMembersTable::class.java,
+        CreateIslandGroupsTable::class.java,
+    )
+
+    companion object {
+        @JvmStatic
+        lateinit var instance: RoseSkyblock
+            private set
     }
 
-    override fun getDataMigrations(): List<Class<out DataMigration>> {
-        return listOf(
-            _1_Create_Table_Island::class.java,
-            _2_Create_Table_Island_Member::class.java,
-            _3_Create_Table_Island_Group::class.java,
-        )
-    }
 }

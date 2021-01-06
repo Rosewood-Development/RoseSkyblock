@@ -7,8 +7,6 @@ import dev.rosewood.roseskyblock.locale.EnglishLocale
 
 class LocaleManager(rosePlugin: RosePlugin) : AbstractLocaleManager(rosePlugin) {
 
-    override fun getLocales(): List<Locale> {
-        return listOf(EnglishLocale())
-    }
+    override fun getLocales() = listOf(EnglishLocale())
 
 }

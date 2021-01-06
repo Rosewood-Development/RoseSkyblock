@@ -6,7 +6,6 @@ import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.roseskyblock.command.SkyblockCommand
 import dev.rosewood.roseskyblock.command.argument.IslandSchematicArgument
 import dev.rosewood.roseskyblock.command.argument.IslandWorldGroupArgument
-import dev.rosewood.roseskyblock.manager.IslandManager
 import dev.rosewood.roseskyblock.util.getNextIslandLocation
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
