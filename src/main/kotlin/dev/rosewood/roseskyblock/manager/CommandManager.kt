@@ -1,14 +1,12 @@
 package dev.rosewood.roseskyblock.manager
 
 import cloud.commandframework.bukkit.CloudBukkitCapabilities
-import cloud.commandframework.bukkit.parsers.WorldArgument
 import cloud.commandframework.captions.FactoryDelegatingCaptionRegistry
 import cloud.commandframework.execution.CommandExecutionCoordinator
 import cloud.commandframework.paper.PaperCommandManager
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.manager.Manager
 import dev.rosewood.roseskyblock.command.SkyblockCaptionKeys
-import dev.rosewood.roseskyblock.command.SkyblockCommand
 import dev.rosewood.roseskyblock.command.argument.IslandSchematicArgument
 import dev.rosewood.roseskyblock.command.argument.IslandWorldGroupArgument
 import dev.rosewood.roseskyblock.feature.admin.reload.ReloadAdminCommand
@@ -16,13 +14,10 @@ import dev.rosewood.roseskyblock.feature.create.CreateCommand
 import dev.rosewood.roseskyblock.feature.default.DefaultCommand
 import dev.rosewood.roseskyblock.feature.help.HelpCommand
 import dev.rosewood.roseskyblock.feature.teleport.TeleportCommand
-import dev.rosewood.roseskyblock.util.getManager
-import dev.rosewood.roseskyblock.util.getNextIslandLocation
 import dev.rosewood.roseskyblock.world.IslandSchematic
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import io.leangen.geantyref.TypeToken
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 
 class CommandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
@@ -63,25 +58,21 @@ class CommandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         val builder = this.manager.commandBuilder("skyblock", "sb", "is", "island", "rsb", "roseskyblock")
 
         listOf(
-            DefaultCommand(this.rosePlugin),
-            HelpCommand(this.rosePlugin),
-            CreateCommand(this.rosePlugin),
-            TeleportCommand(this.rosePlugin)
+            DefaultCommand(rosePlugin),
+            HelpCommand(rosePlugin),
+            CreateCommand(rosePlugin),
+            TeleportCommand(rosePlugin)
         ).forEach { it.create(this.manager, builder)}
 
         val adminBuilder = builder.literal("admin")
 
         listOf(
-            ReloadAdminCommand(this.rosePlugin)
+            ReloadAdminCommand(rosePlugin)
         ).forEach { it.create(this.manager, adminBuilder)}
     }
 
-    override fun reload() {
+    override fun reload() {}
 
-    }
-
-    override fun disable() {
-
-    }
+    override fun disable() {}
 
 }

@@ -4,6 +4,7 @@ import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import java.util.UUID
 
+@Suppress("MemberVisibilityCanBePrivate", "unused") // we will remove these later
 class IslandGroup(
     val worldGroup: IslandWorldGroup,
     val groupId: Int,
@@ -13,21 +14,11 @@ class IslandGroup(
     members: Map<UUID, IslandMemberLevel>
 ) {
 
-    private val _islands: MutableList<Island> = mutableListOf()
-    val islands: List<Island>
-        get() = this._islands.toList()
+    val islands = mutableListOf<Island>().apply { addAll(islands) }
 
-    private val _members: MutableMap<UUID, IslandMemberLevel> = mutableMapOf()
-    val members: Map<UUID, IslandMemberLevel>
-        get() = this._members.toMap()
-
-    init {
-        this._islands.addAll(islands)
-        this._members.putAll(members)
-    }
+    val members = mutableMapOf<UUID, IslandMemberLevel>().apply { putAll(members) }
 
     fun unlockIsland(world: IslandWorld) {
-
+        TODO("Make this thingy do thingys")
     }
-
 }

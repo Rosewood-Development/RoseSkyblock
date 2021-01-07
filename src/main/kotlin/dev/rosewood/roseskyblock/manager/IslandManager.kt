@@ -5,23 +5,23 @@ import dev.rosewood.rosegarden.manager.Manager
 import dev.rosewood.roseskyblock.island.IslandGroup
 import dev.rosewood.roseskyblock.util.getManager
 import dev.rosewood.roseskyblock.util.runAsync
+import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import java.util.concurrent.CompletableFuture
 import org.bukkit.OfflinePlayer
 import java.util.*
 
+@Suppress("unused")
 class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
-    private val _islandGroups = Collections.synchronizedMap(mutableMapOf<UUID, MutableMap<IslandWorldGroup, IslandGroup>>())
-    val islandGroups: Map<UUID, Map<IslandWorldGroup, IslandGroup>>
-        get() = this._islandGroups.toMap()
+    private val islandGroups = Collections.synchronizedMap(mutableMapOf<UUID, MutableMap<IslandWorldGroup, IslandGroup>>())
 
     override fun reload() {
-
+        TODO("Make this thingy do thingys")
     }
 
     override fun disable() {
-
+        TODO("Make this thingy do thingys")
     }
 
     /**
@@ -31,17 +31,17 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
      * @return The smallest positive integer not in the given list
      */
     fun getNextIslandId(existingIds: Collection<Int>): Int {
-        val copy = existingIds.sorted().toMutableList()
-        copy.removeIf { it <= 0 }
-
-        var current = 1
-        for (i in copy) {
-            if (i == current) {
-                current++
-            } else break
+        val copy = existingIds.toMutableList()
+        for (i in 0..copy.size) {
+            while (copy[i] != i + 1) {
+                if (copy[i] <= 0 || copy[i] > copy.size || copy[i] == copy[copy[i] - 1]) break
+                val temp = copy[i]
+                copy[i] = copy[temp - 1]
+                copy[temp - 1] = temp
+            }
         }
-
-        return current
+        for (i in 0..copy.size) if (copy[i] != i + 1) return i + 1
+        return copy.size + 1
     }
 
     /**
@@ -50,22 +50,18 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
      * @param owner The owner of the islands to load
      * @return the islands that were loaded or the islands from cache
      */
+    @Suppress("UNCHECKED_CAST")
     fun tryLoadIslands(owner: OfflinePlayer): CompletableFuture<Map<IslandWorldGroup, IslandGroup>> {
         if (this.islandGroups.containsKey(owner.uniqueId))
             return CompletableFuture.completedFuture(this.islandGroups[owner.uniqueId])
 
-        val future = CompletableFuture<Map<IslandWorldGroup, IslandGroup>>()
-        this.rosePlugin.runAsync {
-            val dataManager = this.rosePlugin.getManager(DataManager::class)
-            val islands = mutableMapOf<IslandWorldGroup, IslandGroup>()
-            this.rosePlugin.getManager(WorldManager::class).worldGroups.forEach { worldGroup ->
-                dataManager.getIslandGroup(owner, worldGroup).ifPresent {
-                    islands[worldGroup] = it
-                }
-            }
-            future.complete(islands)
+        return CompletableFuture.supplyAsync {
+            val dataManager = this.rosePlugin.getManager<DataManager>()
+
+            this.rosePlugin.getManager<WorldManager>().worldGroups.associateWith {
+                dataManager.getIslandGroup(owner, it)
+            }.filterValues { it != null } as Map<IslandWorldGroup, IslandGroup>
         }
-        return future
     }
 
     /**
@@ -75,7 +71,7 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
      */
     fun tryUnloadIslands(owner: OfflinePlayer) {
         // TODO: Check if island is still active, if so, don't unload it
-        this._islandGroups.remove(owner.uniqueId)
+        islandGroups.remove(owner.uniqueId)
     }
 
 }

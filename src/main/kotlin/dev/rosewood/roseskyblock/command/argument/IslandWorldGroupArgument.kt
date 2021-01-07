@@ -20,6 +20,7 @@ import java.util.function.BiFunction
  *
  * @param <C> Command sender type
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused", "CanBeParameter")
 class IslandWorldGroupArgument<C> private constructor(
     required: Boolean,
     name: String,
@@ -44,9 +45,7 @@ class IslandWorldGroupArgument<C> private constructor(
          * @return Created builder
          */
         @JvmStatic
-        fun <C> newBuilder(name: String): CommandArgument.Builder<C, IslandWorldGroup> {
-            return Builder(name)
-        }
+        fun <C> newBuilder(name: String): CommandArgument.Builder<C, IslandWorldGroup> = Builder(name)
 
         /**
          * Create a new required argument
@@ -56,9 +55,7 @@ class IslandWorldGroupArgument<C> private constructor(
          * @return Created argument
          */
         @JvmStatic
-        fun <C> of(name: String): CommandArgument<C, IslandWorldGroup> {
-            return this.newBuilder<C>(name).asRequired().build()
-        }
+        fun <C> of(name: String) = this.newBuilder<C>(name).asRequired().build()
 
         /**
          * Create a new optional argument
@@ -67,9 +64,7 @@ class IslandWorldGroupArgument<C> private constructor(
          * @param <C>  Command sender type
          * @return Created argument
         </C> */
-        fun <C> optional(name: String): CommandArgument<C, IslandWorldGroup> {
-            return this.newBuilder<C>(name).asOptional().build()
-        }
+        fun <C> optional(name: String) = this.newBuilder<C>(name).asOptional().build()
 
         /**
          * Create a new optional argument with a default value
@@ -80,21 +75,13 @@ class IslandWorldGroupArgument<C> private constructor(
          * @return Created argument
          */
         @JvmStatic
-        fun <C> optional(name: String, defaultValue: String): CommandArgument<C, IslandWorldGroup> {
-            return this.newBuilder<C>(name).asOptionalWithDefault(defaultValue).build()
-        }
+        fun <C> optional(name: String, defaultValue: String) = this.newBuilder<C>(name).asOptionalWithDefault(defaultValue).build()
 
     }
 
-    class Builder<C>(name: String) : CommandArgument.Builder<C, IslandWorldGroup>(
-        IslandWorldGroup::class.java,
-        name
-    ) {
+    class Builder<C>(name: String) : CommandArgument.Builder<C, IslandWorldGroup>(IslandWorldGroup::class.java, name) {
 
-        override fun build(): CommandArgument<C, IslandWorldGroup> {
-            return IslandWorldGroupArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
-        }
-
+        override fun build() = IslandWorldGroupArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
     }
 
     class IslandWorldGroupParser<C> : ArgumentParser<C, IslandWorldGroup> {
@@ -111,7 +98,7 @@ class IslandWorldGroupArgument<C> private constructor(
                     )
                 )
 
-            val worldManager = RoseSkyblock.instance.getManager(WorldManager::class)
+            val worldManager = RoseSkyblock.instance.getManager<WorldManager>()
             val islandWorldGroup = worldManager.getIslandWorldGroup(input)
                 ?: return ArgumentParseResult.failure(IslandWorldGroupParseException(input, commandContext))
 
@@ -120,9 +107,8 @@ class IslandWorldGroupArgument<C> private constructor(
         }
 
         override fun suggestions(commandContext: CommandContext<C>, input: String): List<String> {
-            return RoseSkyblock.instance.getManager(WorldManager::class).worldGroups.map { it.name }
+            return RoseSkyblock.instance.getManager<WorldManager>().worldGroups.map { it.name }
         }
-
     }
 
     class IslandWorldGroupParseException(val input: String, context: CommandContext<*>) : ParserException(

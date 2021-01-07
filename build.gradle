@@ -20,7 +20,7 @@ repositories {
     maven { url = 'https://repo.rosewooddev.io/repository/public/' }
 
     maven {
-        url = 'https://repo.rosewooddev.io/repository/maven-public'
+        url = 'https://repo.rosewooddev.io/repository/maven-public/'
         credentials {
             username project.mavenUser
             password project.mavenPassword
@@ -34,7 +34,7 @@ repositories {
 dependencies {
     shadow 'org.spigotmc:spigot:1.16.4'
     shadow 'com.sk89q.worldedit:worldedit-bukkit:7.2.0-SNAPSHOT'
-    shadow 'me.clip:placeholderapi:2.10.4'
+    shadow 'me.clip:placeholderapi:2.10.9'
 
     implementation 'dev.rosewood:rosegarden:1.0.5-SNAPSHOT'
     implementation 'dev.rosewood:guiframework:1.1.1'

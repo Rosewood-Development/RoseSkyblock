@@ -1,40 +1,36 @@
 package dev.rosewood.roseskyblock.command
 
 import cloud.commandframework.captions.Caption
-import java.util.Collections
-import java.util.LinkedList
+import java.util.*
 
-class SkyblockCaptionKeys {
+object SkyblockCaptionKeys {
 
-    companion object {
+    @Suppress("MemberVisibilityCanBePrivate") // we will use this outside of here
+    val RECOGNIZED_CAPTIONS = LinkedList<Caption>()
 
-        private val RECOGNIZED_CAPTIONS: MutableCollection<Caption> = LinkedList()
+    /**
+     * Variables: {input}
+     */
+    val ARGUMENT_PARSE_FAILURE_ISLAND_WORLD_GROUP = this.of("argument.parse.failure.island_world_group")
 
-        /**
-         * Variables: {input}
-         */
-        val ARGUMENT_PARSE_FAILURE_ISLAND_WORLD_GROUP = this.of("argument.parse.failure.island_world_group")
+    /**
+     * Variables: {input}
+     */
+    val ARGUMENT_PARSE_FAILURE_ISLAND_SCHEMATIC = this.of("argument.parse.failure.island_schematic")
 
-        /**
-         * Variables: {input}
-         */
-        val ARGUMENT_PARSE_FAILURE_ISLAND_SCHEMATIC = this.of("argument.parse.failure.island_schematic")
-
-        private fun of(key: String): Caption {
-            val caption = Caption.of(key)
-            this.RECOGNIZED_CAPTIONS.add(caption)
-            return caption
-        }
-
-        /**
-         * Get an immutable collection containing all standard caption keys
-         *
-         * @return Immutable collection of keys
-         */
-        fun getSkyblockCaptionKeys(): Collection<Caption> {
-            return Collections.unmodifiableCollection(this.RECOGNIZED_CAPTIONS)
-        }
-
+    private fun of(key: String): Caption {
+        val caption = Caption.of(key)
+        this.RECOGNIZED_CAPTIONS += (caption)
+        return caption
     }
+
+    /**
+     * Get an immutable collection containing all standard caption keys
+     * This is here for consistency with the cloud command framework, it is completely unused.
+     *
+     * @return Immutable collection of keys
+     */
+    @Suppress("unused")
+    fun getSkyblockCaptionKeys(): Collection<Caption> = RECOGNIZED_CAPTIONS.toList()
 
 }

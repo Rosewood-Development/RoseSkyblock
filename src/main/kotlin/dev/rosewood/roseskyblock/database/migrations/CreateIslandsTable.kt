@@ -4,7 +4,7 @@ import dev.rosewood.rosegarden.database.DataMigration
 import dev.rosewood.rosegarden.database.DatabaseConnector
 import java.sql.Connection
 
-class _1_Create_Table_Island : DataMigration(1) {
+class CreateIslandsTable : DataMigration(1) {
 
     override fun migrate(connector: DatabaseConnector, connection: Connection, tablePrefix: String) {
         connection.createStatement().use {
@@ -18,7 +18,8 @@ class _1_Create_Table_Island : DataMigration(1) {
                     spawn_z DOUBLE NOT NULL,
                     spawn_pitch FLOAT NOT NULL,
                     spawn_yaw FLOAT NOT NULL,
-                    UNIQUE (group_id, world)
+                    UNIQUE (group_id, world),
+                    FOREIGN KEY (group_id) REFERENCES island_group(id)
                 )""".trimIndent()
             )
         }

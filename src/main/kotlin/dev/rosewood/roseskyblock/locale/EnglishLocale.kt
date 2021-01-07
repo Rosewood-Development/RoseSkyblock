@@ -5,16 +5,12 @@ import java.util.LinkedHashMap
 
 class EnglishLocale : Locale {
 
-    override fun getLocaleName(): String {
-        return "en_US"
-    }
+    override fun getLocaleName() = "en_US"
 
-    override fun getTranslatorName(): String {
-        return "Esophose"
-    }
+    override fun getTranslatorName() = "Esophose"
 
-    override fun getDefaultLocaleValues(): MutableMap<String, Any> {
-        return object: LinkedHashMap<String, Any>() { init {
+    override fun getDefaultLocaleValues() = object : LinkedHashMap<String, Any>() {
+        init {
             this["#0"] = "Plugin Message Prefix"
             this["prefix"] = "&7[<g:#8A2387:#E94057:#F27121>RoseSkyblock&7] "
 
@@ -29,7 +25,6 @@ class EnglishLocale : Locale {
             this["#3"] = "Reload Command"
             this["command-reload-description"] = "&8 - &d/rsb reload &7- Reloads the plugin"
             this["command-reload-reloaded"] = "&ePlugin data, configuration, and locale files were reloaded."
-        }}
+        }
     }
-
 }

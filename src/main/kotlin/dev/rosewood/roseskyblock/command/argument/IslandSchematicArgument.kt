@@ -10,10 +10,9 @@ import cloud.commandframework.exceptions.parsing.ParserException
 import dev.rosewood.roseskyblock.RoseSkyblock
 import dev.rosewood.roseskyblock.command.SkyblockCaptionKeys
 import dev.rosewood.roseskyblock.manager.SchematicManager
-import dev.rosewood.roseskyblock.manager.WorldManager
 import dev.rosewood.roseskyblock.util.getManager
 import dev.rosewood.roseskyblock.world.IslandSchematic
-import java.util.Queue
+import java.util.*
 import java.util.function.BiFunction
 
 /**
@@ -21,6 +20,7 @@ import java.util.function.BiFunction
  *
  * @param <C> Command sender type
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused", "CanBeParameter")
 class IslandSchematicArgument<C> private constructor(
     required: Boolean,
     name: String,
@@ -45,9 +45,7 @@ class IslandSchematicArgument<C> private constructor(
          * @return Created builder
          */
         @JvmStatic
-        fun <C> newBuilder(name: String): CommandArgument.Builder<C, IslandSchematic> {
-            return Builder(name)
-        }
+        fun <C> newBuilder(name: String): CommandArgument.Builder<C, IslandSchematic> = Builder(name)
 
         /**
          * Create a new required argument
@@ -57,9 +55,7 @@ class IslandSchematicArgument<C> private constructor(
          * @return Created argument
          */
         @JvmStatic
-        fun <C> of(name: String): CommandArgument<C, IslandSchematic> {
-            return this.newBuilder<C>(name).asRequired().build()
-        }
+        fun <C> of(name: String) = this.newBuilder<C>(name).asRequired().build()
 
         /**
          * Create a new optional argument
@@ -68,9 +64,7 @@ class IslandSchematicArgument<C> private constructor(
          * @param <C>  Command sender type
          * @return Created argument
         </C> */
-        fun <C> optional(name: String): CommandArgument<C, IslandSchematic> {
-            return this.newBuilder<C>(name).asOptional().build()
-        }
+        fun <C> optional(name: String) = this.newBuilder<C>(name).asOptional().build()
 
         /**
          * Create a new optional argument with a default value
@@ -81,9 +75,7 @@ class IslandSchematicArgument<C> private constructor(
          * @return Created argument
          */
         @JvmStatic
-        fun <C> optional(name: String, defaultValue: String): CommandArgument<C, IslandSchematic> {
-            return this.newBuilder<C>(name).asOptionalWithDefault(defaultValue).build()
-        }
+        fun <C> optional(name: String, defaultValue: String) = this.newBuilder<C>(name).asOptionalWithDefault(defaultValue).build()
 
     }
 
@@ -92,9 +84,7 @@ class IslandSchematicArgument<C> private constructor(
         name
     ) {
 
-        override fun build(): CommandArgument<C, IslandSchematic> {
-            return IslandSchematicArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
-        }
+        override fun build() = IslandSchematicArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
 
     }
 
@@ -112,8 +102,8 @@ class IslandSchematicArgument<C> private constructor(
                     )
                 )
 
-            val schematicManager = RoseSkyblock.instance.getManager(SchematicManager::class)
-            val schematic = schematicManager.getSchematic(input)
+            val schematicManager = RoseSkyblock.instance.getManager<SchematicManager>()
+            val schematic = schematicManager.schematics[input]
                 ?: return ArgumentParseResult.failure(IslandSchematicParseException(input, commandContext))
 
             inputQueue.remove()
@@ -121,7 +111,7 @@ class IslandSchematicArgument<C> private constructor(
         }
 
         override fun suggestions(commandContext: CommandContext<C>, input: String): List<String> {
-            return RoseSkyblock.instance.getManager(SchematicManager::class).schematics.values.map { it.name }
+            return RoseSkyblock.instance.getManager<SchematicManager>().schematics.values.map { it.name }
         }
 
     }
@@ -132,5 +122,4 @@ class IslandSchematicArgument<C> private constructor(
         SkyblockCaptionKeys.ARGUMENT_PARSE_FAILURE_ISLAND_SCHEMATIC,
         CaptionVariable.of("input", input)
     )
-
 }

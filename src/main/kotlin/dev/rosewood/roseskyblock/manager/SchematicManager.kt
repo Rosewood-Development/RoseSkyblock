@@ -12,9 +12,7 @@ import org.bukkit.Material
 
 class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
-    private val _schematics = mutableMapOf<String, IslandSchematic>()
-    val schematics: Map<String, IslandSchematic>
-        get() = this._schematics.toMap()
+    val schematics = mutableMapOf<String, IslandSchematic>()
 
     override fun reload() {
         val schematicFolder = File(this.rosePlugin.dataFolder, "schematics")
@@ -24,7 +22,7 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         val schematicsConfig = CommentedFileConfiguration.loadConfiguration(schematicsFile)
         if (!exists) {
             this.rosePlugin.copyResourceTo("default.schem", File(schematicFolder, "default.schem"))
-            this.saveDefaults(schematicsConfig)
+            saveDefaults(schematicsConfig)
         }
 
         val schematicFiles = schematicFolder.listFiles() ?: error("Schematics directory does not exist")
@@ -37,7 +35,7 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                         val displayName = section.getString("name") ?: error("$schematicName.name")
                         val icon = parseEnum(Material::class, section.getString("icon") ?: error("$schematicName.icon"))
                         val lore = section.getStringList("lore")
-                        this._schematics[schematicName.toLowerCase()] = IslandSchematic(schematicName, file, displayName, icon, lore)
+                        this.schematics[schematicName.toLowerCase()] = IslandSchematic(schematicName, file, displayName, icon, lore)
                     } else {
                         this.rosePlugin.logger.warning("File located in the schematics folder is not a valid schematic: ${file.name}")
                     }
@@ -51,7 +49,7 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     }
 
     override fun disable() {
-        this._schematics.clear()
+        this.schematics.clear()
     }
 
     private fun saveDefaults(config: CommentedFileConfiguration) {
@@ -63,13 +61,6 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
             "&7Handle with care."
         )
         config.save()
-    }
-
-    fun getSchematic(name: String): IslandSchematic? {
-        for (schematic in this.schematics.values)
-            if (schematic.name.equals(name, ignoreCase = true))
-                return schematic
-        return null
     }
 
 }

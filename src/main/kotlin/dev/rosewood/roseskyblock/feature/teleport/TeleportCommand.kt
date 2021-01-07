@@ -18,7 +18,7 @@ class TeleportCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
             .handler { context ->
                 // TODO: Temporary command
                 val player = context.sender as Player
-                val world = context.get(worldArgument)
+                val world = context[worldArgument]
                 val location = player.location.clone()
                 location.world = world
                 player.teleport(location)

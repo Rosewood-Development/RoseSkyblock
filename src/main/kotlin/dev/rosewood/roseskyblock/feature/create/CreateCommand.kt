@@ -21,8 +21,8 @@ class CreateCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
             .senderType(Player::class.java)
             .handler { context ->
                 val player = context.sender as Player
-                val worldGroup = context.get(worldGroupArgument)
-                val schematic = context.get(schematicArgument)
+                val worldGroup = context[worldGroupArgument]
+                val schematic = context[schematicArgument]
 
                 //this.rosePlugin.getManager(DataManager::class).hasIsland(player)
 

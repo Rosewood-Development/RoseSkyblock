@@ -19,9 +19,7 @@ import org.bukkit.block.Biome
 
 class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
 
-    private val _worldGroups = mutableListOf<IslandWorldGroup>()
-    val worldGroups: List<IslandWorldGroup>
-        get() = this._worldGroups.toList()
+    val worldGroups = mutableListOf<IslandWorldGroup>()
 
     private var hasReloaded = false
 
@@ -30,8 +28,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         val exists = worldsFile.exists()
 
         val worldsConfig = CommentedFileConfiguration.loadConfiguration(worldsFile)
-        if (!exists)
-            this.saveDefaults(worldsConfig)
+        if (!exists) this.saveDefaults(worldsConfig)
 
         worldsConfig.getKeys(false).forEach { worldGroupName ->
             try {
@@ -98,7 +95,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                 if (startingWorld == null)
                     error("${worldGroupName}.starting-world does not match any worlds in this group")
 
-                this._worldGroups.add(IslandWorldGroup(
+                this.worldGroups.add(IslandWorldGroup(
                     worldGroupName,
                     displayName,
                     startingWorld!!,
@@ -111,7 +108,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         }
 
         // Create/Load worlds
-        this._worldGroups.forEach { worldGroup ->
+        this.worldGroups.forEach { worldGroup ->
             worldGroup.worlds.forEach { world ->
                 if (Bukkit.getWorld(world.worldName) == null) {
                     Bukkit.createWorld(
@@ -131,7 +128,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     }
 
     override fun disable() {
-        this._worldGroups.clear()
+        this.worldGroups.clear()
     }
 
     // TODO
@@ -206,6 +203,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         config.save()
     }
 
+    @Suppress("unused")
     fun getIslandWorld(worldName: String): IslandWorld? {
         for (worldGroup in this.worldGroups)
             for (islandWorld in worldGroup.worlds)
@@ -220,5 +218,4 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                 return worldGroup
         return null
     }
-
 }
