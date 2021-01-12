@@ -19,6 +19,6 @@ class IslandGroup(
     val members = mutableMapOf<UUID, IslandMemberLevel>().apply { putAll(members) }
 
     fun unlockIsland(world: IslandWorld) {
-        TODO("Make this thingy do thingys")
+        // TODO Make this thingy do thingys
     }
 }

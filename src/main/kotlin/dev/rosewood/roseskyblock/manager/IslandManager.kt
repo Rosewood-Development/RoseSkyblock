@@ -4,12 +4,10 @@ import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.manager.Manager
 import dev.rosewood.roseskyblock.island.IslandGroup
 import dev.rosewood.roseskyblock.util.getManager
-import dev.rosewood.roseskyblock.util.runAsync
-import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
-import java.util.concurrent.CompletableFuture
 import org.bukkit.OfflinePlayer
 import java.util.*
+import java.util.concurrent.CompletableFuture
 
 @Suppress("unused")
 class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
@@ -17,11 +15,9 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
     private val islandGroups = Collections.synchronizedMap(mutableMapOf<UUID, MutableMap<IslandWorldGroup, IslandGroup>>())
 
     override fun reload() {
-        TODO("Make this thingy do thingys")
     }
 
     override fun disable() {
-        TODO("Make this thingy do thingys")
     }
 
     /**

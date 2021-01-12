@@ -42,7 +42,6 @@ class RoseSkyblock : RosePlugin(
     }
 
     override fun disable() {
-        TODO("Make this thingy do thingys")
     }
 
     override fun getManagerLoadPriority() = listOf(
