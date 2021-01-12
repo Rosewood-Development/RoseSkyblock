@@ -17,9 +17,9 @@ class NMSHandlerImpl : NMSHandler {
 
         if (color == BorderColor.OFF) {
             worldBorder.size = Double.MAX_VALUE
+        } else {
+            worldBorder.size = size
         }
-
-        worldBorder.size = size
         worldBorder.warningDistance = 0
         worldBorder.warningTime = 0
 

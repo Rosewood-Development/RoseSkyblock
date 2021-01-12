@@ -11,6 +11,7 @@ import dev.rosewood.roseskyblock.command.argument.IslandSchematicArgument
 import dev.rosewood.roseskyblock.command.argument.IslandWorldGroupArgument
 import dev.rosewood.roseskyblock.feature.admin.reload.ReloadAdminCommand
 import dev.rosewood.roseskyblock.feature.create.CreateCommand
+import dev.rosewood.roseskyblock.feature.default.BorderCommand
 import dev.rosewood.roseskyblock.feature.default.DefaultCommand
 import dev.rosewood.roseskyblock.feature.help.HelpCommand
 import dev.rosewood.roseskyblock.feature.teleport.TeleportCommand
@@ -61,7 +62,8 @@ class CommandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
             DefaultCommand(rosePlugin),
             HelpCommand(rosePlugin),
             CreateCommand(rosePlugin),
-            TeleportCommand(rosePlugin)
+            TeleportCommand(rosePlugin),
+            BorderCommand(rosePlugin)
         ).forEach { it.create(this.manager, builder) }
 
         val adminBuilder = builder.literal("admin")
