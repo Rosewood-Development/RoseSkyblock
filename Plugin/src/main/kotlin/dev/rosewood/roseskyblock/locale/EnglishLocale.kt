@@ -25,6 +25,10 @@ class EnglishLocale : Locale {
             this["#3"] = "Reload Command"
             this["command-reload-description"] = "&8 - &d/rsb reload &7- Reloads the plugin"
             this["command-reload-reloaded"] = "&ePlugin data, configuration, and locale files were reloaded."
+
+            this["#4"] = "Border Command"
+            this["command-border-description"] = "&8 - &d/rsb border <color> &7- Sets the island border color"
+            this["command-border-changed"] = "&eSet the island border to %color%."
         }
     }
 }
