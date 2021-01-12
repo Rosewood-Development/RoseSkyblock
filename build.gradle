@@ -40,7 +40,6 @@ configurations {
     childJars
 }
 
-
 dependencies {
     implementation project(':Plugin')
     implementation project(':NMS-Wrapper')
@@ -58,17 +57,17 @@ dependencies {
 
 shadowJar {
     archiveClassifier.set(null)
-    minimize()
 
     relocate('kotlin', 'dev.rosewood.roseskyblock.lib.kotlin')
     relocate('org.jetbrains.annotations', 'dev.rosewood.roseskyblock.lib.annotations')
+    relocate('org.intellij.lang.annotations', 'dev.rosewood.roseskyblock.lib.annotations')
     relocate('dev.rosewood.rosegarden', 'dev.rosewood.roseskyblock.lib.rosegarden')
     relocate('dev.rosewood.guiframework', 'dev.rosewood.roseskyblock.lib.guiframework')
     relocate('io.papermc.lib', 'dev.rosewood.roseskyblock.lib.paperlib')
     relocate('cloud.commandframework', 'dev.rosewood.roseskyblock.lib.commandframework')
     relocate('me.lucko.commodore', 'dev.rosewood.roseskyblock.lib.commodore')
     relocate('io.leangen.geantyref', 'dev.rosewood.roseskyblock.lib.geantyref')
-
+    
     exclude('com/mojang/**')
 }
 
