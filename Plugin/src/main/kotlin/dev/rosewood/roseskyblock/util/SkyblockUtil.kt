@@ -3,14 +3,14 @@ package dev.rosewood.roseskyblock.util
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.manager.Manager
 import dev.rosewood.roseskyblock.world.IslandWorld
+import kotlin.math.floor
+import kotlin.math.sqrt
+import kotlin.reflect.KClass
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.nio.file.Files
-import kotlin.math.floor
-import kotlin.math.sqrt
-import kotlin.reflect.KClass
 
 /**
  * Gets a manager instance.

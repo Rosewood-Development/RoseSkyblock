@@ -12,7 +12,7 @@ import dev.rosewood.roseskyblock.command.SkyblockCaptionKeys
 import dev.rosewood.roseskyblock.manager.SchematicManager
 import dev.rosewood.roseskyblock.util.getManager
 import dev.rosewood.roseskyblock.world.IslandSchematic
-import java.util.*
+import java.util.Queue
 import java.util.function.BiFunction
 
 /**
@@ -63,15 +63,16 @@ class IslandSchematicArgument<C> private constructor(
          * @param name Argument name
          * @param <C>  Command sender type
          * @return Created argument
-        </C> */
+         */
+        @JvmStatic
         fun <C> optional(name: String) = this.newBuilder<C>(name).asOptional().build()
 
         /**
          * Create a new optional argument with a default value
          *
-         * @param name         Argument name
+         * @param name Argument name
          * @param defaultValue Default value
-         * @param <C>          Command sender type
+         * @param <C> Command sender type
          * @return Created argument
          */
         @JvmStatic
@@ -122,4 +123,5 @@ class IslandSchematicArgument<C> private constructor(
         SkyblockCaptionKeys.ARGUMENT_PARSE_FAILURE_ISLAND_SCHEMATIC,
         CaptionVariable.of("input", input)
     )
+
 }

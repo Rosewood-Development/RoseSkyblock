@@ -2,11 +2,15 @@ package dev.rosewood.roseskyblock
 
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.utils.NMSUtil
-import dev.rosewood.roseskyblock.database.migrations.CreateIslandGroupsTable
-import dev.rosewood.roseskyblock.database.migrations.CreateIslandMembersTable
-import dev.rosewood.roseskyblock.database.migrations.CreateIslandsTable
+import dev.rosewood.roseskyblock.database.migrations._1_CreateInitialTables
 import dev.rosewood.roseskyblock.listener.PlayerListener
-import dev.rosewood.roseskyblock.manager.*
+import dev.rosewood.roseskyblock.manager.CommandManager
+import dev.rosewood.roseskyblock.manager.ConfigurationManager
+import dev.rosewood.roseskyblock.manager.DataManager
+import dev.rosewood.roseskyblock.manager.IslandManager
+import dev.rosewood.roseskyblock.manager.LocaleManager
+import dev.rosewood.roseskyblock.manager.SchematicManager
+import dev.rosewood.roseskyblock.manager.WorldManager
 import org.bukkit.Bukkit
 
 class RoseSkyblock : RosePlugin(
@@ -46,9 +50,7 @@ class RoseSkyblock : RosePlugin(
     )
 
     override fun getDataMigrations() = listOf(
-        CreateIslandsTable::class.java,
-        CreateIslandMembersTable::class.java,
-        CreateIslandGroupsTable::class.java,
+        _1_CreateInitialTables::class.java
     )
 
     companion object {

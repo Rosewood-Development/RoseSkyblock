@@ -4,7 +4,7 @@ import dev.rosewood.rosegarden.utils.NMSUtil
 import org.bukkit.World
 import org.bukkit.block.Biome
 import org.bukkit.generator.ChunkGenerator
-import java.util.*
+import java.util.Random
 
 class LayeredChunkGenerator(private val chunkLayers: List<ChunkLayer>, private val biome: Biome) : ChunkGenerator() {
 

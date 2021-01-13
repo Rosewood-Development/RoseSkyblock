@@ -2,7 +2,7 @@ package dev.rosewood.roseskyblock.island
 
 import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
-import java.util.*
+import java.util.UUID
 
 @Suppress("MemberVisibilityCanBePrivate", "unused") // we will remove these later
 class IslandGroup(

@@ -1,14 +1,16 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.20' apply false
     id 'com.github.johnrengelman.shadow' version '6.1.0' apply false
+    id 'maven-publish'
 }
 
 allprojects {
     apply plugin: 'java'
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'org.jetbrains.kotlin.jvm'
+
     group 'dev.rosewood'
-    version '1.0.0'
+    version '1.0.0-SNAPSHOT'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -36,10 +38,6 @@ allprojects {
     }
 }
 
-configurations {
-    childJars
-}
-
 dependencies {
     implementation project(':Plugin')
     implementation project(':NMS-Wrapper')
@@ -49,10 +47,6 @@ dependencies {
     implementation project(':NMS-v1_16_R1')
     implementation project(':NMS-v1_16_R2')
     implementation project(':NMS-v1_16_R3')
-
-    subprojects.each {
-        childJars project(it.path)
-    }
 }
 
 shadowJar {
@@ -67,15 +61,39 @@ shadowJar {
     relocate('cloud.commandframework', 'dev.rosewood.roseskyblock.lib.commandframework')
     relocate('me.lucko.commodore', 'dev.rosewood.roseskyblock.lib.commodore')
     relocate('io.leangen.geantyref', 'dev.rosewood.roseskyblock.lib.geantyref')
-    
+
     exclude('com/mojang/**')
+
+    // TODO: Fix minimize. There is about 600kb of unused stuff in the output jar
+    minimize {
+        subprojects.each {
+            exclude(project(it.path))
+        }
+    }
 }
 
-jar {
-    dependsOn configurations.childJars
-    from {
-        configurations.childJars.collect {
-            zipTree(it)
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+            artifactId = 'roseskyblock'
+            pom {
+                name = 'roseskyblock'
+            }
+        }
+    }
+    repositories {
+        if (project.hasProperty('mavenUser') && project.hasProperty('mavenPassword')) {
+            maven {
+                credentials {
+                    username project.mavenUser
+                    password project.mavenPassword
+                }
+
+                def releasesRepoUrl = 'https://repo.rosewooddev.io/repository/public-releases/'
+                def snapshotsRepoUrl = 'https://repo.rosewooddev.io/repository/public-snapshots/'
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            }
         }
     }
 }

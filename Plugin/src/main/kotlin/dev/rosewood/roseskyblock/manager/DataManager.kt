@@ -10,7 +10,7 @@ import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import org.bukkit.Location
 import org.bukkit.OfflinePlayer
 import java.sql.Statement
-import java.util.*
+import java.util.UUID
 
 @Suppress("unused")
 class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {

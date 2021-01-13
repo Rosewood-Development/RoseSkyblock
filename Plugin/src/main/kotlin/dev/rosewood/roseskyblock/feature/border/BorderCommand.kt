@@ -1,4 +1,4 @@
-package dev.rosewood.roseskyblock.feature.default
+package dev.rosewood.roseskyblock.feature.border
 
 import cloud.commandframework.Command
 import cloud.commandframework.CommandManager
@@ -8,19 +8,18 @@ import dev.rosewood.roseskyblock.command.SkyblockCommand
 import dev.rosewood.roseskyblock.manager.LocaleManager
 import dev.rosewood.roseskyblock.nms.BorderColor
 import dev.rosewood.roseskyblock.nms.NMSAdapter
-import java.util.Random
 import org.apache.commons.lang.StringUtils
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import java.util.Random
 
 class BorderCommand(rosePlugin: RosePlugin) : SkyblockCommand(rosePlugin) {
 
     override fun create(manager: CommandManager<CommandSender>, builder: Command.Builder<CommandSender>) {
-        val localeManager = rosePlugin.getManager(LocaleManager::class.java)
-
         manager.command(builder.literal("border")
             .senderType(Player::class.java)
             .handler { context ->
+                val localeManager = this.rosePlugin.getManager(LocaleManager::class.java)
 
                 // TODO: Add Island Support
                 val player = context.sender as Player

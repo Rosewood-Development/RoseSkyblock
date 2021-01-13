@@ -10,6 +10,7 @@ import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 
 class NMSHandlerImpl : NMSHandler {
+
     override fun sendWorldBorder(player: Player, color: BorderColor, size: Double, center: Location) {
         val worldBorder = WorldBorder()
         worldBorder.world = (center.world as CraftWorld).handle
@@ -31,4 +32,5 @@ class NMSHandlerImpl : NMSHandler {
 
         (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutWorldBorder(worldBorder, PacketPlayOutWorldBorder.EnumWorldBorderAction.INITIALIZE))
     }
+
 }

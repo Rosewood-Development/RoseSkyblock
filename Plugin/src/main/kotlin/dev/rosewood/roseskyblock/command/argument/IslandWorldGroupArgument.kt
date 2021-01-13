@@ -12,7 +12,7 @@ import dev.rosewood.roseskyblock.command.SkyblockCaptionKeys
 import dev.rosewood.roseskyblock.manager.WorldManager
 import dev.rosewood.roseskyblock.util.getManager
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
-import java.util.*
+import java.util.Queue
 import java.util.function.BiFunction
 
 /**
@@ -20,7 +20,6 @@ import java.util.function.BiFunction
  *
  * @param <C> Command sender type
  */
-@Suppress("MemberVisibilityCanBePrivate", "unused", "CanBeParameter")
 class IslandWorldGroupArgument<C> private constructor(
     required: Boolean,
     name: String,
@@ -63,7 +62,8 @@ class IslandWorldGroupArgument<C> private constructor(
          * @param name Argument name
          * @param <C>  Command sender type
          * @return Created argument
-        </C> */
+         */
+        @JvmStatic
         fun <C> optional(name: String) = this.newBuilder<C>(name).asOptional().build()
 
         /**
@@ -82,6 +82,7 @@ class IslandWorldGroupArgument<C> private constructor(
     class Builder<C>(name: String) : CommandArgument.Builder<C, IslandWorldGroup>(IslandWorldGroup::class.java, name) {
 
         override fun build() = IslandWorldGroupArgument<C>(this.isRequired, this.name, this.defaultValue, this.suggestionsProvider)
+
     }
 
     class IslandWorldGroupParser<C> : ArgumentParser<C, IslandWorldGroup> {
@@ -109,6 +110,7 @@ class IslandWorldGroupArgument<C> private constructor(
         override fun suggestions(commandContext: CommandContext<C>, input: String): List<String> {
             return RoseSkyblock.instance.getManager<WorldManager>().worldGroups.map { it.name }
         }
+
     }
 
     class IslandWorldGroupParseException(val input: String, context: CommandContext<*>) : ParserException(

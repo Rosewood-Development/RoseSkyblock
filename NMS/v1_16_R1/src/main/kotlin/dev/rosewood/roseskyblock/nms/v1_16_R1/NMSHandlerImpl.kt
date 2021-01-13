@@ -29,6 +29,11 @@ class NMSHandlerImpl : NMSHandler {
             worldBorder.transitionSizeBetween(size - 0.1, size, 20000000L)
         }
 
-        (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutWorldBorder(worldBorder, PacketPlayOutWorldBorder.EnumWorldBorderAction.INITIALIZE))
+        (player as CraftPlayer).handle.playerConnection.sendPacket(
+            PacketPlayOutWorldBorder(
+                worldBorder,
+                PacketPlayOutWorldBorder.EnumWorldBorderAction.INITIALIZE
+            )
+        )
     }
 }

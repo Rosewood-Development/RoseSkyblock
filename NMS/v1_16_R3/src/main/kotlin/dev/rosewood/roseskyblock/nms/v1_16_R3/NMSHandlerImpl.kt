@@ -4,13 +4,13 @@ import dev.rosewood.roseskyblock.nms.BorderColor
 import dev.rosewood.roseskyblock.nms.NMSHandler
 import net.minecraft.server.v1_16_R3.PacketPlayOutWorldBorder
 import net.minecraft.server.v1_16_R3.WorldBorder
-import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 
 class NMSHandlerImpl : NMSHandler {
+
     override fun sendWorldBorder(player: Player, color: BorderColor, size: Double, center: Location) {
         val worldBorder = WorldBorder()
         worldBorder.world = (center.world as CraftWorld).handle
@@ -33,4 +33,5 @@ class NMSHandlerImpl : NMSHandler {
 
         (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutWorldBorder(worldBorder, PacketPlayOutWorldBorder.EnumWorldBorderAction.INITIALIZE))
     }
+
 }

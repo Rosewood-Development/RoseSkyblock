@@ -6,7 +6,8 @@ import dev.rosewood.roseskyblock.island.IslandGroup
 import dev.rosewood.roseskyblock.util.getManager
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import org.bukkit.OfflinePlayer
-import java.util.*
+import java.util.Collections
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
 @Suppress("unused")

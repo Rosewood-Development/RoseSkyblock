@@ -1,7 +1,7 @@
 package dev.rosewood.roseskyblock.locale
 
 import dev.rosewood.rosegarden.locale.Locale
-import java.util.*
+import java.util.LinkedHashMap
 
 class EnglishLocale : Locale {
 

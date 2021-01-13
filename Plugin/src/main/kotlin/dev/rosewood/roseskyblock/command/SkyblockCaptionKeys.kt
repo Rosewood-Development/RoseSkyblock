@@ -1,7 +1,7 @@
 package dev.rosewood.roseskyblock.command
 
 import cloud.commandframework.captions.Caption
-import java.util.*
+import java.util.LinkedList
 
 object SkyblockCaptionKeys {
 
@@ -20,7 +20,7 @@ object SkyblockCaptionKeys {
 
     private fun of(key: String): Caption {
         val caption = Caption.of(key)
-        this.RECOGNIZED_CAPTIONS += (caption)
+        this.RECOGNIZED_CAPTIONS += caption
         return caption
     }
 
@@ -31,6 +31,6 @@ object SkyblockCaptionKeys {
      * @return Immutable collection of keys
      */
     @Suppress("unused")
-    fun getSkyblockCaptionKeys(): Collection<Caption> = RECOGNIZED_CAPTIONS.toList()
+    fun getSkyblockCaptionKeys(): Collection<Caption> = this.RECOGNIZED_CAPTIONS.toList()
 
 }
