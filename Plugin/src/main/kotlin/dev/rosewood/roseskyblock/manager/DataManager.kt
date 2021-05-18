@@ -78,7 +78,9 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
     }
 
     fun getIslandGroup(player: OfflinePlayer, worldGroup: IslandWorldGroup): IslandGroup? {
+        // TODO, Fix no such column group_id
         var islandGroup: IslandGroup? = null
+
         this.databaseConnector.connect { connection ->
             val selectGroup =
                 "SELECT group_id, location_id FROM ${this.tablePrefix}island_group WHERE group_name = ? AND owner_uuid = ?"

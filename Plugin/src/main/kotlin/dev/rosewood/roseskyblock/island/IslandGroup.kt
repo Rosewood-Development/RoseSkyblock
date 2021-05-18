@@ -14,11 +14,12 @@ class IslandGroup(
     members: Map<UUID, IslandMemberLevel>
 ) {
 
-    val islands = mutableListOf<Island>().apply { addAll(islands) }
+    val islands = mutableListOf<Island>().apply { this.addAll(islands) }
 
-    val members = mutableMapOf<UUID, IslandMemberLevel>().apply { putAll(members) }
+    val members = mutableMapOf<UUID, IslandMemberLevel>().apply { this.putAll(members) }
 
     fun unlockIsland(world: IslandWorld) {
         // TODO Make this thingy do thingys
     }
+
 }

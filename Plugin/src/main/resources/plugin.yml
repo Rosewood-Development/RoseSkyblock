@@ -6,3 +6,7 @@ authors: [ Esophose ]
 description: a cool skyblock plugin
 loadbefore: [ Multiverse, Hyperverse, UltraRegions ]
 softdepend: [ WorldEdit, PlaceholderAPI ]
+commands:
+  island:
+    aliases: [ rsb, roseskyblock ]
+    description: Root command for RoseSkyblock.

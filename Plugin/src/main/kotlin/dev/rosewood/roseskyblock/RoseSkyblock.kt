@@ -2,9 +2,9 @@ package dev.rosewood.roseskyblock
 
 import dev.rosewood.rosegarden.RosePlugin
 import dev.rosewood.rosegarden.utils.NMSUtil
+import dev.rosewood.roseskyblock.command.handler.Commander
 import dev.rosewood.roseskyblock.database.migrations._1_CreateInitialTables
 import dev.rosewood.roseskyblock.listener.PlayerListener
-import dev.rosewood.roseskyblock.manager.CommandManager
 import dev.rosewood.roseskyblock.manager.ConfigurationManager
 import dev.rosewood.roseskyblock.manager.DataManager
 import dev.rosewood.roseskyblock.manager.IslandManager
@@ -36,6 +36,17 @@ class RoseSkyblock : RosePlugin(
             return
         }
 
+
+        // Register Command Handler
+
+        val cmd = this.getCommand("island")
+        if (cmd != null) {
+            val commander = Commander(this)
+
+            cmd.setExecutor(commander)
+            cmd.tabCompleter = commander
+        }
+
         Bukkit.getPluginManager().registerEvents(PlayerListener(this), this)
     }
 
@@ -43,7 +54,6 @@ class RoseSkyblock : RosePlugin(
     }
 
     override fun getManagerLoadPriority() = listOf(
-        CommandManager::class.java,
         SchematicManager::class.java,
         WorldManager::class.java,
         IslandManager::class.java
