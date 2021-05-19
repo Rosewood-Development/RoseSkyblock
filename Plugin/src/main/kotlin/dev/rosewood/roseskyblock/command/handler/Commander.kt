@@ -2,6 +2,7 @@ package dev.rosewood.roseskyblock.command.handler
 
 import dev.rosewood.rosegarden.utils.StringPlaceholders
 import dev.rosewood.roseskyblock.RoseSkyblock
+import dev.rosewood.roseskyblock.command.BorderCommand
 import dev.rosewood.roseskyblock.command.CreateCommand
 import dev.rosewood.roseskyblock.manager.LocaleManager
 import org.bukkit.command.CommandSender
@@ -33,6 +34,8 @@ class Commander(private val plugin: RoseSkyblock) : CommandHandler(plugin, "isla
     init {
         // Register Plugin Commands.
         this.registerCommand("create", CreateCommand())
+        this.registerCommand("border", BorderCommand())
+
     }
-    
+
 }

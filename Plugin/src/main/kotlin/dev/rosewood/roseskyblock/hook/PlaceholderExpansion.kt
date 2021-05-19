@@ -15,9 +15,13 @@ class PlaceholderExpansion(private val rosePlugin: RosePlugin) : PlaceholderExpa
     }
 
     override fun canRegister() = true
+
     override fun persist() = true
+
     override fun getIdentifier() = this.rosePlugin.description.name.toLowerCase()
+
     override fun getAuthor(): String = this.rosePlugin.description.authors[0]
+
     override fun getVersion() = this.rosePlugin.description.version
 
 }

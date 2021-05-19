@@ -19,7 +19,8 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
 
     fun paste(rosePlugin: RosePlugin, location: Location) {
         val clipboard: Clipboard
-        clipboardFormat.getReader(FileInputStream(this.file)).use { clipboard = it.read() }
+
+        this.clipboardFormat.getReader(FileInputStream(this.file)).use { clipboard = it.read() }
 
         val pasteTask = Runnable {
 

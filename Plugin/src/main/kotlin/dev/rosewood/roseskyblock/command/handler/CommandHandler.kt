@@ -117,7 +117,7 @@ abstract class CommandHandler(private val plugin: RoseSkyblock, val cmd: String)
 
         // Execute command
         try {
-            subCommand.execute(this.plugin, sender, this.shortenArgs(args))
+            subCommand.execute(this.plugin, sender, args)
         } catch (e: ArrayIndexOutOfBoundsException) {
             sender.sendMessage(ChatColor.RED.toString() + "A RoseSkyblock error occurred while executing that command. Did you enter an invalid parameter?")
         }
@@ -212,13 +212,15 @@ abstract class CommandHandler(private val plugin: RoseSkyblock, val cmd: String)
      * @return Shortened array.
      */
     private fun shortenArgs(args: Array<String>): Array<String> {
+        // TODO, Might end up removing this because kotlin is weird
+        return args
 
-        if (args.isEmpty()) {
-            return args
-        }
-
-        val argList = mutableListOf(args).subList(1, args.size)
-        return argList.toTypedArray().firstOrNull() ?: args
+//        if (args.isEmpty()) {
+//            return args
+//        }
+//
+//        val argList = mutableListOf(args).subList(1, args.size)
+//        return argList.toTypedArray().firstOrNull() ?: args
     }
 
 }

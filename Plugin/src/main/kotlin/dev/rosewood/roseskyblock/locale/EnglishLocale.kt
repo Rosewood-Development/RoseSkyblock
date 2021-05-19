@@ -1,7 +1,6 @@
 package dev.rosewood.roseskyblock.locale
 
 import dev.rosewood.rosegarden.locale.Locale
-import java.util.LinkedHashMap
 
 class EnglishLocale : Locale {
 
@@ -29,6 +28,12 @@ class EnglishLocale : Locale {
             this["#4"] = "Border Command"
             this["command-border-description"] = "&8 - &d/rsb border <color> &7- Sets the island border color"
             this["command-border-changed"] = "&eSet the island border to %color%."
+            this["command-border-usage"] = "&cUsage: &d/island border <color>."
+            // May wanna change this if the name is a bit too wack, note for nicole
+            this["command-border-invalid-color"] = "&cThe color you specified is not available."
+
+            this["#5"] = "Misc Messages"
+            this["misc-player-only"] = "&cOnly players may execute this command."
         }
     }
 }
