@@ -11,15 +11,15 @@ class _1_CreateInitialTables : DataMigration(1) {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island (
                     id INTEGER PRIMARY KEY,
-                    group_id INTEGER NOT NULL,
+                    id INTEGER NOT NULL,
                     world VARCHAR(100) NOT NULL,
                     spawn_x DOUBLE NOT NULL,
                     spawn_y DOUBLE NOT NULL,
                     spawn_z DOUBLE NOT NULL,
                     spawn_pitch FLOAT NOT NULL,
                     spawn_yaw FLOAT NOT NULL,
-                    UNIQUE (group_id, world),
-                    FOREIGN KEY (group_id) REFERENCES island_group(id)
+                    UNIQUE (id, world),
+                    FOREIGN KEY (id) REFERENCES island_group(id)
                 )""".trimIndent()
             )
         }
@@ -28,11 +28,11 @@ class _1_CreateInitialTables : DataMigration(1) {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island_member (
                     id INTEGER PRIMARY KEY,
-                    group_id INTEGER NOT NULL,
+                    id INTEGER NOT NULL,
                     player_uuid VARCHAR(36) NOT NULL,
                     member_level VARCHAR(20) NOT NULL,
-                    UNIQUE (group_id, player_uuid),
-                    FOREIGN KEY (group_id) REFERENCES island_group(id)
+                    UNIQUE (id, player_uuid),
+                    FOREIGN KEY (id) REFERENCES island_group(id)
                 )""".trimIndent()
             )
         }

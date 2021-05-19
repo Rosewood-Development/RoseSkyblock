@@ -20,8 +20,10 @@ class Commander(private val plugin: RoseSkyblock) : CommandHandler(plugin, "isla
     override fun noArgs(sender: CommandSender) {
 
         val baseColor = this.locale.getLocaleMessage("base-command-color")
-
-        // TODO Send help command
+        this.locale.sendMessage(sender, "base-command-color")
+        this.locale.sendCustomMessage(sender, baseColor + "Running <g:#8A2387:#E94057:#F27121>RoseSkyblock" + baseColor + this.plugin.description.version)
+        this.locale.sendCustomMessage(sender, baseColor + "Plugin created by: <g:#41E0F0:#FF8DCE>" + this.plugin.description.authors[0])
+        this.locale.sendSimpleMessage(sender, "base-command-help")
     }
 
     override fun unknownCommand(sender: CommandSender, args: Array<String>) {

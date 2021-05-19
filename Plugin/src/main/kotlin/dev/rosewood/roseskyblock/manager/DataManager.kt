@@ -41,7 +41,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
             }
 
             val insertMember =
-                "INSERT INTO ${this.tablePrefix}island_member (group_id, player_uuid, member_level) VALUES (?, ?, ?)"
+                "INSERT INTO ${this.tablePrefix}island_member (id, player_uuid, member_level) VALUES (?, ?, ?)"
             connection.prepareStatement(insertMember).use {
                 it.setInt(1, islandGroup.groupId)
                 it.setString(2, ownerUniqueId.toString())
@@ -56,7 +56,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
         lateinit var island: Island
         this.databaseConnector.connect { connection ->
             val insertGroup =
-                "INSERT INTO ${this.tablePrefix}island (group_id, world, spawn_x, spawn_y, spawn_z, spawn_pitch, spawn_yaw) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO ${this.tablePrefix}island (id, world, spawn_x, spawn_y, spawn_z, spawn_pitch, spawn_yaw) VALUES (?, ?, ?, ?, ?, ?, ?)"
             connection.prepareStatement(insertGroup, Statement.RETURN_GENERATED_KEYS).use {
                 it.setInt(1, islandGroup.groupId)
                 it.setString(2, islandWorld.worldName)
@@ -78,12 +78,11 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
     }
 
     fun getIslandGroup(player: OfflinePlayer, worldGroup: IslandWorldGroup): IslandGroup? {
-        // TODO, Fix no such column group_id
         var islandGroup: IslandGroup? = null
 
         this.databaseConnector.connect { connection ->
             val selectGroup =
-                "SELECT group_id, location_id FROM ${this.tablePrefix}island_group WHERE group_name = ? AND owner_uuid = ?"
+                "SELECT id, location_id FROM ${this.tablePrefix}island_group WHERE group_name = ? AND owner_uuid = ?"
 
             var groupId: Int = -1
             val islands = mutableListOf<Island>()
@@ -94,7 +93,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
                 it.setString(2, player.uniqueId.toString())
                 val result = it.executeQuery()
                 if (result.next()) {
-                    groupId = result.getInt("group_id")
+                    groupId = result.getInt("id")
 
                     islandGroup = IslandGroup(
                         worldGroup,
@@ -110,7 +109,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
             if (islandGroup == null)
                 return@connect
 
-            val selectIslands = "SELECT * FROM ${this.tablePrefix}island WHERE group_id = ?"
+            val selectIslands = "SELECT * FROM ${this.tablePrefix}island WHERE id = ?"
             connection.prepareStatement(selectIslands).use {
                 it.setInt(1, groupId)
                 val result = it.executeQuery()
@@ -134,7 +133,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
                 }
             }
 
-            val selectMembers = "SELECT * FROM ${this.tablePrefix}island_member WHERE group_id = ?"
+            val selectMembers = "SELECT * FROM ${this.tablePrefix}island_member WHERE id = ?"
             connection.prepareStatement(selectMembers).use {
                 it.setInt(1, groupId)
                 val result = it.executeQuery()

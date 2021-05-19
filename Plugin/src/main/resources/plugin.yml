@@ -2,7 +2,7 @@ name: RoseSkyblock
 main: dev.rosewood.roseskyblock.RoseSkyblock
 version: '@version@'
 api-version: '1.13'
-authors: [ Esophose ]
+authors: [ Esophose, Oribuin ]
 description: a cool skyblock plugin
 loadbefore: [ Multiverse, Hyperverse, UltraRegions ]
 softdepend: [ WorldEdit, PlaceholderAPI ]
