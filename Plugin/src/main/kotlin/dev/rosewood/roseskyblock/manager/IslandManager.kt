@@ -68,7 +68,7 @@ class IslandManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
      */
     fun tryUnloadIslands(owner: OfflinePlayer) {
         // TODO: Check if island is still active, if so, don't unload it
-        islandGroups.remove(owner.uniqueId)
+        this.islandGroups.remove(owner.uniqueId)
     }
 
 }

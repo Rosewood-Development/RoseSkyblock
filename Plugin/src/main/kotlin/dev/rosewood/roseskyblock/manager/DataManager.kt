@@ -15,8 +15,17 @@ import java.util.UUID
 @Suppress("unused")
 class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
 
+    /**
+     * Save a new island world group into SQL
+     *
+     * @param worldGroup The worldgroup
+     * @param ownerUniqueId The island group's owner ID
+     * @param locationId The IslandGroup location
+     * @return The owner's new IslandGroup.
+     */
     fun saveNewIslandGroup(worldGroup: IslandWorldGroup, ownerUniqueId: UUID, locationId: Int): IslandGroup {
         lateinit var islandGroup: IslandGroup
+
         this.databaseConnector.connect { connection ->
             val insertGroup =
                 "INSERT INTO ${this.tablePrefix}island_group (group_name, owner_uuid, location_id) VALUES (?, ?, ?)"
@@ -42,6 +51,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
 
             val insertMember =
                 "INSERT INTO ${this.tablePrefix}island_member (id, player_uuid, member_level) VALUES (?, ?, ?)"
+
             connection.prepareStatement(insertMember).use {
                 it.setInt(1, islandGroup.groupId)
                 it.setString(2, ownerUniqueId.toString())
@@ -52,11 +62,21 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
         return islandGroup
     }
 
+    /**
+     * Save a new island into the DB
+     *
+     * @param islandGroup The island's group
+     * @param islandWorld The island's world
+     * @param spawnLocation The island's spawn location
+     * @return The island
+     */
     fun saveNewIsland(islandGroup: IslandGroup, islandWorld: IslandWorld, spawnLocation: Location): Island {
         lateinit var island: Island
+
         this.databaseConnector.connect { connection ->
             val insertGroup =
                 "INSERT INTO ${this.tablePrefix}island (id, world, spawn_x, spawn_y, spawn_z, spawn_pitch, spawn_yaw) VALUES (?, ?, ?, ?, ?, ?, ?)"
+
             connection.prepareStatement(insertGroup, Statement.RETURN_GENERATED_KEYS).use {
                 it.setInt(1, islandGroup.groupId)
                 it.setString(2, islandWorld.worldName)
@@ -73,10 +93,19 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
                 val islandId = keys.getInt(1)
                 island = Island(islandGroup, islandId, islandWorld, spawnLocation)
             }
+
         }
+
         return island
     }
 
+    /**
+     * Get a player's current island group
+     *
+     * @param player The player.
+     * @param worldGroup The island's world group.
+     * @return player's IslandGroup or null.
+     */
     fun getIslandGroup(player: OfflinePlayer, worldGroup: IslandWorldGroup): IslandGroup? {
         var islandGroup: IslandGroup? = null
 
@@ -134,6 +163,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
             }
 
             val selectMembers = "SELECT * FROM ${this.tablePrefix}island_member WHERE id = ?"
+
             connection.prepareStatement(selectMembers).use {
                 it.setInt(1, groupId)
                 val result = it.executeQuery()
@@ -143,7 +173,9 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
                     members[uuid] = memberLevel
                 }
             }
+
         }
+
         return islandGroup
     }
 

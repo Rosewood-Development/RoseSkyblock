@@ -22,7 +22,7 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         val schematicsConfig = CommentedFileConfiguration.loadConfiguration(schematicsFile)
         if (!exists) {
             this.rosePlugin.copyResourceTo("default.schem", File(schematicFolder, "default.schem"))
-            saveDefaults(schematicsConfig)
+            this.saveDefaults(schematicsConfig)
         }
 
         val schematicFiles = schematicFolder.listFiles() ?: error("Schematics directory does not exist")

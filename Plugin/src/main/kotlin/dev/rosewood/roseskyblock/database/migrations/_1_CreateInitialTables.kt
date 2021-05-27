@@ -11,7 +11,7 @@ class _1_CreateInitialTables : DataMigration(1) {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island (
                     id INTEGER PRIMARY KEY,
-                    id INTEGER NOT NULL,
+                    group_id INTEGER NOT NULL,
                     world VARCHAR(100) NOT NULL,
                     spawn_x DOUBLE NOT NULL,
                     spawn_y DOUBLE NOT NULL,
@@ -28,7 +28,7 @@ class _1_CreateInitialTables : DataMigration(1) {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island_member (
                     id INTEGER PRIMARY KEY,
-                    id INTEGER NOT NULL,
+                    group_id INTEGER NOT NULL,
                     player_uuid VARCHAR(36) NOT NULL,
                     member_level VARCHAR(20) NOT NULL,
                     UNIQUE (id, player_uuid),
