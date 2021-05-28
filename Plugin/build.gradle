@@ -18,7 +18,7 @@ dependencies {
 
     // Stuff that will be shaded into jar
     api 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    api 'dev.rosewood:rosegarden:1.0.5-SNAPSHOT'
+    api 'dev.rosewood:rosegarden:1.0.7-SNAPSHOT'
     api 'dev.rosewood:guiframework:1.1.2-SNAPSHOT'
     api 'io.papermc:paperlib:1.0.5'
 }
