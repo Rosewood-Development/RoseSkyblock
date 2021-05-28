@@ -5,6 +5,7 @@ import dev.rosewood.rosegarden.manager.AbstractDataManager
 import dev.rosewood.roseskyblock.island.Island
 import dev.rosewood.roseskyblock.island.IslandGroup
 import dev.rosewood.roseskyblock.island.IslandMemberLevel
+import dev.rosewood.roseskyblock.island.IslandSettings
 import dev.rosewood.roseskyblock.world.IslandWorld
 import dev.rosewood.roseskyblock.world.IslandWorldGroup
 import org.bukkit.Location
@@ -97,6 +98,24 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
         }
 
         return island
+    }
+
+    /**
+     * Save a new set of island settings into the DB
+     *
+     * @param settings The island settings.
+     */
+    fun saveNewIslandSettings(settings: IslandSettings) {
+        this.databaseConnector.connect { connection ->
+            val insertSettings =
+                "INSERT INTO ${this.tablePrefix}settings (border) VALUES (?)"
+
+            connection.prepareStatement(insertSettings).use {
+                it.setString(1, settings.border.name)
+                it.executeUpdate()
+            }
+
+        }
     }
 
     /**

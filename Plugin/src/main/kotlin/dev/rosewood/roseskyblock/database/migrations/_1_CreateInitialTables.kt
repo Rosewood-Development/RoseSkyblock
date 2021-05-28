@@ -49,6 +49,17 @@ class _1_CreateInitialTables : DataMigration(1) {
                 )""".trimIndent()
             )
         }
+
+        connection.createStatement().use {
+            it.execute(
+                """
+                    CREATE TABLE ${tablePrefix}island_settings (
+                    id INTEGER PRIMARY KEY,
+                    border VARCHAR(10) NOT NULL
+                    )
+                """.trimIndent()
+            )
+        }
     }
 
 }
