@@ -12,8 +12,8 @@ class ReloadCommand : SkyblockCommand("reload") {
         plugin.getManager(LocaleManager::class.java).sendMessage(sender, "command-reload-reloaded")
     }
 
-    override fun tabComplete(plugin: RoseSkyblock, sender: CommandSender, args: Array<String>): MutableList<String> {
-        return mutableListOf()
+    override fun tabComplete(plugin: RoseSkyblock, sender: CommandSender, args: Array<String>): List<String> {
+        return listOf()
     }
 
 }

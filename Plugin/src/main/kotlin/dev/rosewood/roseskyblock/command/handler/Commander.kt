@@ -10,8 +10,6 @@ import org.bukkit.command.CommandSender
 
 /**
  * Handles the commands for the root command.
- *
- * @author Mitsugaru
  */
 class Commander(private val plugin: RoseSkyblock) : CommandHandler(plugin, "island") {
 

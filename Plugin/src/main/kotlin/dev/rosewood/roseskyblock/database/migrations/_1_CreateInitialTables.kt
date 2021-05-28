@@ -2,15 +2,19 @@ package dev.rosewood.roseskyblock.database.migrations
 
 import dev.rosewood.rosegarden.database.DataMigration
 import dev.rosewood.rosegarden.database.DatabaseConnector
+import dev.rosewood.rosegarden.database.MySQLConnector
 import java.sql.Connection
+
 
 class _1_CreateInitialTables : DataMigration(1) {
 
     override fun migrate(connector: DatabaseConnector, connection: Connection, tablePrefix: String) {
+        val autoIncrement = if (connector is MySQLConnector) " AUTO_INCREMENT" else ""
+
         connection.createStatement().use {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island (
-                    id INTEGER PRIMARY KEY,
+                    id INTEGER PRIMARY KEY$autoIncrement,
                     group_id INTEGER NOT NULL,
                     world VARCHAR(100) NOT NULL,
                     spawn_x DOUBLE NOT NULL,
@@ -19,7 +23,7 @@ class _1_CreateInitialTables : DataMigration(1) {
                     spawn_pitch FLOAT NOT NULL,
                     spawn_yaw FLOAT NOT NULL,
                     UNIQUE (id, world),
-                    FOREIGN KEY (id) REFERENCES island_group(id)
+                    FOREIGN KEY (group_id) REFERENCES island_group(id)
                 )""".trimIndent()
             )
         }
@@ -27,12 +31,12 @@ class _1_CreateInitialTables : DataMigration(1) {
         connection.createStatement().use {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island_member (
-                    id INTEGER PRIMARY KEY,
+                    id INTEGER PRIMARY KEY$autoIncrement,
                     group_id INTEGER NOT NULL,
                     player_uuid VARCHAR(36) NOT NULL,
                     member_level VARCHAR(20) NOT NULL,
                     UNIQUE (id, player_uuid),
-                    FOREIGN KEY (id) REFERENCES island_group(id)
+                    FOREIGN KEY (group_id) REFERENCES island_group(id)
                 )""".trimIndent()
             )
         }
@@ -40,7 +44,7 @@ class _1_CreateInitialTables : DataMigration(1) {
         connection.createStatement().use {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island_group (
-                    id INTEGER PRIMARY KEY,
+                    id INTEGER PRIMARY KEY$autoIncrement,
                     group_name VARCHAR(100) NOT NULL,
                     owner_uuid VARCHAR(36) NOT NULL,
                     location_id INTEGER NOT NULL,
@@ -52,12 +56,10 @@ class _1_CreateInitialTables : DataMigration(1) {
 
         connection.createStatement().use {
             it.execute(
-                """
-                    CREATE TABLE ${tablePrefix}island_settings (
-                    id INTEGER PRIMARY KEY,
+                """CREATE TABLE ${tablePrefix}island_settings (
+                    id INTEGER PRIMARY KEY$autoIncrement,
                     border VARCHAR(10) NOT NULL
-                    )
-                """.trimIndent()
+                )""".trimIndent()
             )
         }
     }

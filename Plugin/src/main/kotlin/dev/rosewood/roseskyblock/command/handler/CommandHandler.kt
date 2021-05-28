@@ -2,13 +2,13 @@ package dev.rosewood.roseskyblock.command.handler
 
 import dev.rosewood.roseskyblock.RoseSkyblock
 import dev.rosewood.roseskyblock.manager.LocaleManager
-import kotlin.streams.toList
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.permissions.Permissible
 import org.bukkit.util.StringUtil
+import kotlin.streams.toList
 
 
 /**
@@ -27,8 +27,7 @@ abstract class CommandHandler(private val plugin: RoseSkyblock, val cmd: String)
      * Register a command with an execution handler.
      *
      * @param label   - Command to listen for.
-     * @param command - Execution handler that will handle the logic behind the
-     * command.
+     * @param command - Execution handler that will handle the logic behind the command.
      */
     fun registerCommand(label: String, command: SkyblockCommand) {
 
@@ -86,7 +85,7 @@ abstract class CommandHandler(private val plugin: RoseSkyblock, val cmd: String)
             return true
         }
 
-        val subcmd = args[0].toLowerCase()
+        val subcmd = args[0].lowercase()
 
         // Check known handlers first and pass to them
         val handler = this.registeredHandlers[subcmd]
@@ -117,7 +116,7 @@ abstract class CommandHandler(private val plugin: RoseSkyblock, val cmd: String)
 
         // Execute command
         try {
-            subCommand.execute(this.plugin, sender, args)
+            subCommand.execute(this.plugin, sender, this.shortenArgs(args))
         } catch (e: ArrayIndexOutOfBoundsException) {
             sender.sendMessage(ChatColor.RED.toString() + "A RoseSkyblock error occurred while executing that command. Did you enter an invalid parameter?")
         }
@@ -129,7 +128,7 @@ abstract class CommandHandler(private val plugin: RoseSkyblock, val cmd: String)
 
         if (args.isEmpty()) return emptyList()
 
-        val subcmd = args[0].toLowerCase()
+        val subcmd = args[0].lowercase()
 
         if (args.size == 1) {
 
@@ -211,16 +210,6 @@ abstract class CommandHandler(private val plugin: RoseSkyblock, val cmd: String)
      * @param args - Array to shorten.
      * @return Shortened array.
      */
-    private fun shortenArgs(args: Array<String>): Array<String> {
-        // TODO, Might end up removing this because kotlin is weird
-        return args
-
-//        if (args.isEmpty()) {
-//            return args
-//        }
-//
-//        val argList = mutableListOf(args).subList(1, args.size)
-//        return argList.toTypedArray().firstOrNull() ?: args
-    }
+    private fun shortenArgs(args: Array<String>): Array<String> = if (args.isEmpty()) args else args.drop(1).toTypedArray()
 
 }

@@ -3,9 +3,7 @@ package dev.rosewood.roseskyblock.command
 import dev.rosewood.rosegarden.utils.StringPlaceholders
 import dev.rosewood.roseskyblock.RoseSkyblock
 import dev.rosewood.roseskyblock.command.handler.SkyblockCommand
-import dev.rosewood.roseskyblock.manager.DataManager
 import dev.rosewood.roseskyblock.manager.LocaleManager
-import dev.rosewood.roseskyblock.manager.WorldManager
 import dev.rosewood.roseskyblock.nms.BorderColor
 import dev.rosewood.roseskyblock.nms.NMSAdapter
 import org.apache.commons.lang.StringUtils
@@ -22,7 +20,7 @@ class BorderCommand : SkyblockCommand("border") {
             return
         }
 
-        if (args.size != 2) {
+        if (args.isEmpty()) {
             locale.sendMessage(sender, "command-border-usage")
             return
         }
@@ -51,7 +49,7 @@ class BorderCommand : SkyblockCommand("border") {
 //            return
 //        }
 
-        val border = BorderColor.values().find { it.name.equals(args[1], true) }
+        val border = BorderColor.values().find { it.name.equals(args[0], true) }
 
         if (border == null) {
             locale.sendMessage(sender, "command-border-invalid-color")
@@ -67,8 +65,12 @@ class BorderCommand : SkyblockCommand("border") {
 
     }
 
-    override fun tabComplete(plugin: RoseSkyblock, sender: CommandSender, args: Array<String>): MutableList<String> {
-        return BorderColor.values().map { it.name.lowercase() }.toMutableList()
+    override fun tabComplete(plugin: RoseSkyblock, sender: CommandSender, args: Array<String>): List<String> {
+        return if (args.size == 1) {
+            BorderColor.values().map { it.name.lowercase() }.toList()
+        } else {
+            listOf()
+        }
     }
 
 }

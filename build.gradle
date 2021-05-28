@@ -1,6 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.5.0' apply false
-    id 'com.github.johnrengelman.shadow' version '6.1.0' apply false
+    id 'com.github.johnrengelman.shadow' version '7.0.0' apply false
     id 'maven-publish'
 }
 
@@ -16,12 +16,11 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
 
         maven { url = 'https://libraries.minecraft.net' }
         maven { url = 'https://papermc.io/repo/repository/maven-public/' }
         maven { url = 'https://maven.enginehub.org/repo/' }
-        maven { url = 'http://repo.extendedclip.com/content/repositories/placeholderapi/' }
+        maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
         maven { url = 'https://repo.codemc.org/repository/maven-public' }
         maven { url = 'https://repo.rosewooddev.io/repository/public/' }
 
@@ -58,11 +57,6 @@ shadowJar {
     relocate('dev.rosewood.rosegarden', 'dev.rosewood.roseskyblock.lib.rosegarden')
     relocate('dev.rosewood.guiframework', 'dev.rosewood.roseskyblock.lib.guiframework')
     relocate('io.papermc.lib', 'dev.rosewood.roseskyblock.lib.paperlib')
-    relocate('cloud.commandframework', 'dev.rosewood.roseskyblock.lib.commandframework')
-    relocate('me.lucko.commodore', 'dev.rosewood.roseskyblock.lib.commodore')
-    relocate('io.leangen.geantyref', 'dev.rosewood.roseskyblock.lib.geantyref')
-
-    exclude('com/mojang/**')
 
     // TODO: Fix minimize. There is about 600kb of unused stuff in the output jar
     minimize {

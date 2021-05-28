@@ -23,19 +23,19 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
         this.clipboardFormat.getReader(FileInputStream(this.file)).use { clipboard = it.read() }
 
         val pasteTask = Runnable {
-
-            // FastAsyncWorldEdit isn't updated to include the non-deprecated version yet
-            @Suppress("DEPRECATION")
-            WorldEdit.getInstance().editSessionFactory.getEditSession(BukkitAdapter.adapt(location.world), -1).use {
-                Operations.complete(
-                    ClipboardHolder(clipboard)
-                        .createPaste(it)
-                        .to(BukkitAdapter.asBlockVector(location))
-                        .copyEntities(true)
-                        .ignoreAirBlocks(true)
-                        .build()
-                )
-            }
+            WorldEdit.getInstance().newEditSessionBuilder()
+                .world(BukkitAdapter.adapt(location.world))
+                .maxBlocks(-1)
+                .build().use {
+                    Operations.complete(
+                        ClipboardHolder(clipboard)
+                            .createPaste(it)
+                            .to(BukkitAdapter.asBlockVector(location))
+                            .copyEntities(true)
+                            .ignoreAirBlocks(true)
+                            .build()
+                    )
+                }
         }
 
         if (Bukkit.getPluginManager().isPluginEnabled("FastAsyncWorldEdit") || Bukkit.getPluginManager().isPluginEnabled("AsyncWorldEdit")) {

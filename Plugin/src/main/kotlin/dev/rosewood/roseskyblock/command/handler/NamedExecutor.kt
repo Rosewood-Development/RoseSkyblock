@@ -1,7 +1,6 @@
 package dev.rosewood.roseskyblock.command.handler
 
 import org.bukkit.permissions.Permissible
-import java.security.Permission
 
 interface NamedExecutor {
 

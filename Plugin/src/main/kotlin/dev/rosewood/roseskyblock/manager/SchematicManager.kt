@@ -35,7 +35,7 @@ class SchematicManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                         val displayName = section.getString("name") ?: error("$schematicName.name")
                         val icon = parseEnum(Material::class, section.getString("icon") ?: error("$schematicName.icon"))
                         val lore = section.getStringList("lore")
-                        this.schematics[schematicName.toLowerCase()] = IslandSchematic(schematicName, file, displayName, icon, lore)
+                        this.schematics[schematicName.lowercase()] = IslandSchematic(schematicName, file, displayName, icon, lore)
                     } else {
                         this.rosePlugin.logger.warning("File located in the schematics folder is not a valid schematic: ${file.name}")
                     }

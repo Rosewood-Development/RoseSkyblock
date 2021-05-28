@@ -20,20 +20,8 @@ class CreateCommand : SkyblockCommand("create") {
             return
         }
 
-        worldManager.worldGroups.map { it.name }.forEach { println(it) }
-
-        val worldGroup = worldManager.worldGroups.find { it.name.equals(args[1], true) }
-        if (worldGroup == null) {
-            println("worldgroup is null")
-            return
-        }
-
-        val schematic = plugin.getManager(SchematicManager::class.java).schematics.map { it.value }.find { it.name.equals(args[2], true) }
-        if (schematic == null) {
-            println("schematic is null")
-            return
-        }
-
+        val worldGroup = worldManager.worldGroups.find { it.name.equals(args[0], true) } ?: return
+        val schematic = plugin.getManager(SchematicManager::class.java).schematics.map { it.value }.find { it.name.equals(args[1], true) } ?: return
         val location = getNextIslandLocation(0, worldGroup.startingWorld)
         schematic.paste(plugin, location)
         sender.teleport(location)
@@ -41,18 +29,15 @@ class CreateCommand : SkyblockCommand("create") {
         // TODO, Create island
     }
 
-    override fun tabComplete(plugin: RoseSkyblock, sender: CommandSender, args: Array<String>): MutableList<String> {
-
+    override fun tabComplete(plugin: RoseSkyblock, sender: CommandSender, args: Array<String>): List<String> {
         val worldGroups = plugin.getManager(WorldManager::class.java).worldGroups
         val schems = plugin.getManager(SchematicManager::class.java).schematics
 
-        println(args.size)
         return when (args.size) {
-            1 -> worldGroups.map { it.name }.toMutableList()
-            2 -> schems.map { it.value.name }.toMutableList()
-            else -> mutableListOf()
+            1 -> worldGroups.map { it.name }.toList()
+            2 -> schems.map { it.value.name }.toList()
+            else -> listOf()
         }
-
     }
 
 }
