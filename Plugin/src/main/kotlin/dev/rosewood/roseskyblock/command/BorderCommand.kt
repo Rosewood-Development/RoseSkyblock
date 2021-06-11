@@ -25,30 +25,6 @@ class BorderCommand : SkyblockCommand("border") {
             return
         }
 
-//        val worldManager = plugin.getManager(WorldManager::class.java)
-//
-//        val worldGroup = worldManager.worldGroups.firstOrNull()
-//
-//        if (worldGroup == null) {
-//            println("invalid world group, valid types: " + worldManager.worldGroups.map { it.name }.toString())
-//            return
-//        }
-//
-//        val group = plugin.getManager(DataManager::class.java).getIslandGroup(sender, worldGroup)
-//        // TODO, Send config message
-//        if (group == null) {
-//            println("No group.")
-//            return
-//        }
-//
-//        val island = group.islands.find { it.islandGroup.members.containsKey(sender.uniqueId) }
-//
-//        if (island == null) {
-//            // TODO
-//            println("island null")
-//            return
-//        }
-
         val border = BorderColor.values().find { it.name.equals(args[0], true) }
 
         if (border == null) {

@@ -12,7 +12,7 @@ dependencies {
     implementation project(':NMS-Wrapper')
 
     // Referenced Dependencies
-    compileOnly 'org.spigotmc:spigot:1.16.4'
+    compileOnly 'org.spigotmc:spigot:1.17'
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.5-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.10.9'
 

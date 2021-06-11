@@ -9,6 +9,7 @@ data class Island(
     val islandId: Int,
     val world: IslandWorld,
     val spawnLocation: Location,
+//    var settings: IslandSettings
 ) {
 
     @Suppress("unused") // we will use this later

@@ -1,6 +1,7 @@
 package dev.rosewood.roseskyblock
 
 import dev.rosewood.rosegarden.RosePlugin
+import dev.rosewood.rosegarden.utils.HexUtils
 import dev.rosewood.rosegarden.utils.NMSUtil
 import dev.rosewood.roseskyblock.command.handler.Commander
 import dev.rosewood.roseskyblock.database.migrations._1_CreateInitialTables

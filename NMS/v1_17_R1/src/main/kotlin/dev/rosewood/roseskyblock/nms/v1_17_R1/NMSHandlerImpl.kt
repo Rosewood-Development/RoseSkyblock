@@ -1,12 +1,12 @@
-package dev.rosewood.roseskyblock.nms.v1_16_R3
+package dev.rosewood.roseskyblock.nms.v1_17_R1
 
 import dev.rosewood.roseskyblock.nms.BorderColor
 import dev.rosewood.roseskyblock.nms.NMSHandler
-import net.minecraft.server.v1_16_R3.PacketPlayOutWorldBorder
-import net.minecraft.server.v1_16_R3.WorldBorder
+import net.minecraft.network.protocol.game.ClientboundInitializeBorderPacket
+import net.minecraft.world.level.border.WorldBorder
 import org.bukkit.Location
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 
 class NMSHandlerImpl : NMSHandler {
@@ -31,12 +31,7 @@ class NMSHandlerImpl : NMSHandler {
             worldBorder.transitionSizeBetween(size - 0.1, size, 20000000L)
         }
 
-        (player as CraftPlayer).handle.playerConnection.sendPacket(
-            PacketPlayOutWorldBorder(
-                worldBorder,
-                PacketPlayOutWorldBorder.EnumWorldBorderAction.INITIALIZE
-            )
-        )
+        (player as CraftPlayer).handle.b.sendPacket(ClientboundInitializeBorderPacket(worldBorder))
     }
 
 }
