@@ -22,16 +22,16 @@ class NMSHandlerImpl : NMSHandler {
             worldBorder.size = size
         }
 
-        worldBorder.warningDistance = 0
+        worldBorder.warningBlocks = 0
         worldBorder.warningTime = 0
 
         if (color == BorderColor.RED) {
-            worldBorder.transitionSizeBetween(size, size - 1.0, 20000000L)
+            worldBorder.lerpSizeBetween(size, size - 1.0, 20000000L)
         } else if (color == BorderColor.GREEN) {
-            worldBorder.transitionSizeBetween(size - 0.1, size, 20000000L)
+            worldBorder.lerpSizeBetween(size - 0.1, size, 20000000L)
         }
 
-        (player as CraftPlayer).handle.b.sendPacket(ClientboundInitializeBorderPacket(worldBorder))
+        (player as CraftPlayer).handle.connection.send(ClientboundInitializeBorderPacket(worldBorder))
     }
 
 }

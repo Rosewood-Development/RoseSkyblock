@@ -2,13 +2,13 @@ package dev.rosewood.roseskyblock.command.handler
 
 import dev.rosewood.roseskyblock.RoseSkyblock
 import dev.rosewood.roseskyblock.manager.LocaleManager
+import kotlin.streams.toList
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.permissions.Permissible
 import org.bukkit.util.StringUtil
-import kotlin.streams.toList
 
 
 /**

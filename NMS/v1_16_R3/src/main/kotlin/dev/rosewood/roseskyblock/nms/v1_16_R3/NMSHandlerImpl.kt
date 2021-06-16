@@ -4,6 +4,7 @@ import dev.rosewood.roseskyblock.nms.BorderColor
 import dev.rosewood.roseskyblock.nms.NMSHandler
 import net.minecraft.server.v1_16_R3.PacketPlayOutWorldBorder
 import net.minecraft.server.v1_16_R3.WorldBorder
+import net.minecraft.server.v1_16_R3.WorldServer
 import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer

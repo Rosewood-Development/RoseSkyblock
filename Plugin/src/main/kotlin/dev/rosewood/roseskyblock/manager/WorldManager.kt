@@ -36,14 +36,14 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
                 val displayName = groupSection.getString("name") ?: error("${worldGroupName}.name")
                 val startingWorldName = groupSection.getString("starting-world") ?: error("${worldGroupName}.starting-world")
                 var startingWorld: IslandWorld? = null
-                val gamemode = parseEnum(GameMode::class, (groupSection.getString("gamemode") ?: error("${worldGroupName}.gamemode")).toUpperCase())
+                val gamemode = parseEnum(GameMode::class, (groupSection.getString("gamemode") ?: error("${worldGroupName}.gamemode")).uppercase())
                 val islandWorlds: MutableList<IslandWorld> = mutableListOf()
                 val worldsSection = groupSection.getConfigurationSection("worlds") ?: error("${worldGroupName}.worlds")
                 worldsSection.getKeys(false).forEach { worldName ->
                     val worldSection = worldsSection.getConfigurationSection(worldName) ?: error("${worldGroupName}.worlds.$worldName")
                     val worldDisplayName = worldSection.getString("name") ?: error("${worldGroupName}.worlds.${worldName}.name")
-                    val worldEnvironment = parseEnum(World.Environment::class, (worldSection.getString("environment") ?: error("${worldGroupName}.worlds.${worldName}.environment")).toUpperCase())
-                    val worldBiome = parseEnum(Biome::class, (worldSection.getString("biome") ?: error("${worldGroupName}.worlds.${worldName}.biome")).toUpperCase())
+                    val worldEnvironment = parseEnum(World.Environment::class, (worldSection.getString("environment") ?: error("${worldGroupName}.worlds.${worldName}.environment")).uppercase())
+                    val worldBiome = parseEnum(Biome::class, (worldSection.getString("biome") ?: error("${worldGroupName}.worlds.${worldName}.biome")).uppercase())
                     val worldGenerationSection = worldSection.getConfigurationSection("world-generation")
                     val worldChunkLayers: List<ChunkLayer> = if (worldGenerationSection == null) {
                         listOf()
