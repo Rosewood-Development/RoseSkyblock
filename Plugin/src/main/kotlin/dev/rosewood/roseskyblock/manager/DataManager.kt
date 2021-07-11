@@ -51,7 +51,7 @@ class DataManager(rosePlugin: RosePlugin) : AbstractDataManager(rosePlugin) {
             }
 
             val insertMember =
-                "INSERT INTO ${this.tablePrefix}island_member (id, player_uuid, member_level) VALUES (?, ?, ?)"
+                "INSERT INTO ${this.tablePrefix}island_member (group_id, player_uuid, member_level) VALUES (?, ?, ?)"
 
             connection.prepareStatement(insertMember).use {
                 it.setInt(1, islandGroup.groupId)

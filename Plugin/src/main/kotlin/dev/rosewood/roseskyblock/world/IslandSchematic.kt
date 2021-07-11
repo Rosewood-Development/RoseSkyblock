@@ -17,7 +17,7 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
 
     private val clipboardFormat = ClipboardFormats.findByFile(this.file) ?: error("Not a valid schematic: ${this.name}")
 
-    fun paste(rosePlugin: RosePlugin, location: Location) {
+    fun paste(rosePlugin: RosePlugin, location: Location, callback: (() -> Unit)? = null) {
         val clipboard: Clipboard
 
         this.clipboardFormat.getReader(FileInputStream(this.file)).use { clipboard = it.read() }
@@ -36,6 +36,8 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
                             .build()
                     )
                 }
+
+            callback?.invoke()
         }
 
         if (Bukkit.getPluginManager().isPluginEnabled("FastAsyncWorldEdit") || Bukkit.getPluginManager().isPluginEnabled("AsyncWorldEdit")) {
@@ -43,6 +45,7 @@ class IslandSchematic(val name: String, private val file: File, val displayName:
         } else {
             pasteTask.run()
         }
+
     }
 
 }

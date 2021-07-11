@@ -7,7 +7,7 @@ import java.util.UUID
 @Suppress("MemberVisibilityCanBePrivate", "unused") // we will remove these later
 class IslandGroup(
     val worldGroup: IslandWorldGroup,
-    val groupId: Int,
+    val groupId: UUID,
     val ownerUniqueId: UUID,
     val locationId: Int,
     islands: List<Island>,

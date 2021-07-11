@@ -218,6 +218,7 @@ class WorldManager(rosePlugin: RosePlugin) : Manager(rosePlugin) {
         for (worldGroup in this.worldGroups)
             if (worldGroup.name.equals(groupName, ignoreCase = true))
                 return worldGroup
+
         return null
     }
 }

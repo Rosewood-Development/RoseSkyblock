@@ -3,10 +3,11 @@ package dev.rosewood.roseskyblock.island
 import dev.rosewood.roseskyblock.util.getNextIslandLocation
 import dev.rosewood.roseskyblock.world.IslandWorld
 import org.bukkit.Location
+import java.util.UUID
 
 data class Island(
     val islandGroup: IslandGroup,
-    val islandId: Int,
+    val islandId: UUID,
     val world: IslandWorld,
     val spawnLocation: Location,
 //    var settings: IslandSettings

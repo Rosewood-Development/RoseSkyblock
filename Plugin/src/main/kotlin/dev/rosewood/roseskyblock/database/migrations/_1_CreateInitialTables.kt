@@ -32,7 +32,7 @@ class _1_CreateInitialTables : DataMigration(1) {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island_member (
                     id INTEGER PRIMARY KEY$autoIncrement,
-                    group_id INTEGER NOT NULL,
+                    group_id VARCHAR(36) NOT NULL,
                     player_uuid VARCHAR(36) NOT NULL,
                     member_level VARCHAR(20) NOT NULL,
                     UNIQUE (id, player_uuid),
@@ -44,7 +44,7 @@ class _1_CreateInitialTables : DataMigration(1) {
         connection.createStatement().use {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island_group (
-                    id INTEGER PRIMARY KEY$autoIncrement,
+                    id VARCHAR(36) PRIMARY KEY$autoIncrement,
                     group_name VARCHAR(100) NOT NULL,
                     owner_uuid VARCHAR(36) NOT NULL,
                     location_id INTEGER NOT NULL,
@@ -57,7 +57,7 @@ class _1_CreateInitialTables : DataMigration(1) {
         connection.createStatement().use {
             it.execute(
                 """CREATE TABLE ${tablePrefix}island_settings (
-                    id INTEGER PRIMARY KEY$autoIncrement,
+                    id VARCHAR(36) PRIMARY KEY$autoIncrement,
                     border VARCHAR(10) NOT NULL
                 )""".trimIndent()
             )
