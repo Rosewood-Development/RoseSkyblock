@@ -7,6 +7,11 @@ description: a cool skyblock plugin
 loadbefore: [ Multiverse, Hyperverse, UltraRegions ]
 softdepend: [ WorldEdit, PlaceholderAPI ]
 commands:
-  island:
-    aliases: [ rsb, roseskyblock ]
+  rsb:
+    aliases: [ island ]
     description: Root command for RoseSkyblock.
+    permission: roseskyblock.basecommand
+permissions:
+  roseskyblock.basecommand:
+    description: Allows using the RoseSkyblock ocmmand.
+    default: true
