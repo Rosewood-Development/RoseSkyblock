@@ -10,7 +10,7 @@ import java.util.List;
 public record IslandWorld(
         String worldName,
         String displayName,
-        World.Environment enviroment,
+        World.Environment environment,
         Biome biome,
         List<ChunkLayer> layers,
         PortalLinks links,

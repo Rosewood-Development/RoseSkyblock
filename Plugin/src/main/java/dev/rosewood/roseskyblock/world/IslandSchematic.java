@@ -24,7 +24,7 @@ public record IslandSchematic(String name, File file, String displayName, Materi
     /**
      * Paste in an island schematic.
      *
-     * @param plugin RoseSkyblock plugin
+     * @param plugin   RoseSkyblock plugin
      * @param location The location of the schematic
      * @param callback Callback function when finished
      */
@@ -50,9 +50,15 @@ public record IslandSchematic(String name, File file, String displayName, Materi
                     .build();
 
             try {
-                Operations.complete(new ClipboardHolder(finalClipboard).createPaste(session).to(BukkitAdapter.asBlockVector(location)).copyEntities(true).ignoreAirBlocks(true).build());
+                Operations.complete(new ClipboardHolder(finalClipboard)
+                        .createPaste(session)
+                        .to(BukkitAdapter.asBlockVector(location))
+                        .copyEntities(false)
+                        .copyBiomes(false)
+                        .ignoreAirBlocks(true)
+                        .build());
             } catch (WorldEditException e) {
-                e.printStackTrace();
+                plugin.getLogger().severe("Failed to paste schematic [" + this.name + "]: " + e.getMessage());
             }
 
             callback.run();

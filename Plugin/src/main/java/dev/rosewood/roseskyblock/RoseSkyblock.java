@@ -43,11 +43,6 @@ public class RoseSkyblock extends RosePlugin {
             return;
         }
 
-        // Register Command Handler
-        PluginCommand command = this.getCommand("rsb");
-        if (command != null)
-            command.setExecutor(this.getManager(CommandManager.class));
-
         // Register Listeners
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerListener(this), this);

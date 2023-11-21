@@ -58,7 +58,7 @@ public class _1_CreateInitialTables extends DataMigration {
             statement.addBatch(islandSettings);
             statement.executeBatch();
         }
-        
+
     }
 
 }

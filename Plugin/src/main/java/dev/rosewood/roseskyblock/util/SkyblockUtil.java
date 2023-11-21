@@ -75,12 +75,16 @@ public final class SkyblockUtil {
         return fileName.substring(0, index);
     }
 
-    public static <T extends Enum<T>> T parseEnum(Class<T> obj, String value) {
-        Optional<T> result = Arrays.stream(obj.getEnumConstants()).filter(t -> t.name().equalsIgnoreCase(value)).findFirst();
-        if (result.isEmpty())
-            throw new NullPointerException("Invalid " + obj.getSimpleName() + " specified: " + value);
+    public static <T extends Enum<T>> T getEnum(Class<T> enumClass, String name) {
+        if (name == null)
+            return null;
 
-        return result.get();
+        try {
+            return Enum.valueOf(enumClass, name.toUpperCase());
+        } catch (IllegalArgumentException ignored) {
+        }
+
+        return null;
     }
 
 }

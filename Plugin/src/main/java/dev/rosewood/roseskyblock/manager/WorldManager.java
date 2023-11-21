@@ -53,14 +53,14 @@ public class WorldManager extends Manager {
                 String displayName = groupSection.getString("name");
                 String startingWorldName = groupSection.getString("starting-world");
                 AtomicReference<IslandWorld> startingWorld = new AtomicReference<>();
-                GameMode gamemode = SkyblockUtil.parseEnum(GameMode.class, groupSection.getString("gamemode").toUpperCase());
+                GameMode gamemode = SkyblockUtil.getEnum(GameMode.class, groupSection.getString("gamemode"));
                 List<IslandWorld> islandWorlds = new ArrayList<>();
                 CommentedConfigurationSection worldsSection = groupSection.getConfigurationSection("worlds");
                 worldsSection.getKeys(false).forEach(worldName -> {
                     CommentedConfigurationSection worldSection = worldsSection.createSection(worldName);
                     String worldDisplayName = worldSection.getString("name");
-                    World.Environment worldEnviroment = SkyblockUtil.parseEnum(World.Environment.class, worldSection.getString("enviroment").toUpperCase());
-                    Biome worldBiome = SkyblockUtil.parseEnum(Biome.class, worldSection.getString("biome").toUpperCase());
+                    World.Environment worldenvironment = SkyblockUtil.getEnum(World.Environment.class, worldSection.getString("environment"));
+                    Biome worldBiome = SkyblockUtil.getEnum(Biome.class, worldSection.getString("biome"));
 
                     CommentedConfigurationSection worldGenerationSection = worldSection.getConfigurationSection("world-generation");
                     List<ChunkLayer> worldChunkLayers;
@@ -69,7 +69,7 @@ public class WorldManager extends Manager {
                     } else {
                         List<ChunkLayer> chunkLayers = new ArrayList<>();
                         worldGenerationSection.getKeys(false).forEach(layers -> {
-                            Material layerMaterial = SkyblockUtil.parseEnum(Material.class, worldGenerationSection.getString(layers));
+                            Material layerMaterial = SkyblockUtil.getEnum(Material.class, worldGenerationSection.getString(layers));
                             try {
                                 if (layers.contains("-")) {
                                     String[] split = layers.split("-");
@@ -97,7 +97,7 @@ public class WorldManager extends Manager {
                     IslandWorld world = new IslandWorld(
                             worldName,
                             worldDisplayName,
-                            worldEnviroment,
+                            worldenvironment,
                             worldBiome,
                             worldChunkLayers,
                             worldPortalLinks,
@@ -121,8 +121,8 @@ public class WorldManager extends Manager {
                 if (Bukkit.getWorld(islandWorld.worldName()) == null) {
                     Bukkit.createWorld(
                             WorldCreator.name(islandWorld.worldName())
-                                    .generator(new LayeredChunkGenerator(islandWorld.layers(), islandWorld.biome()))
-                                    .environment(islandWorld.enviroment()));
+                                    .generator(new LayeredChunkGenerator(islandWorld.layers()))
+                                    .environment(islandWorld.environment()));
                 }
             });
         });
@@ -181,7 +181,7 @@ public class WorldManager extends Manager {
         for (IslandWorld world : survivalWorldGroup.worlds()) {
             CommentedConfigurationSection worldSection = worldsSection.createSection(world.worldName());
             worldSection.set("name", world.displayName());
-            worldSection.set("enviroment", world.enviroment().name());
+            worldSection.set("environment", world.environment().name());
             worldSection.set("biome", world.biome().name());
             if (world.layers().isEmpty()) {
                 worldSection.set("world-generation", new ArrayList<>());

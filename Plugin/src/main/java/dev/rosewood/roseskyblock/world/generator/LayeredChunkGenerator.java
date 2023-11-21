@@ -1,8 +1,9 @@
 package dev.rosewood.roseskyblock.world.generator;
 
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.generator.WorldInfo;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Random;
@@ -10,28 +11,29 @@ import java.util.Random;
 public class LayeredChunkGenerator extends ChunkGenerator {
 
     private final List<ChunkLayer> layers;
-    private final Biome biome;
 
-    public LayeredChunkGenerator(List<ChunkLayer> layers, Biome biome) {
+    public LayeredChunkGenerator(List<ChunkLayer> layers) {
         this.layers = layers;
-        this.biome = biome;
     }
 
     @Override
-    public ChunkData generateChunkData(World world, Random random, int chunkX, int chunkZ, BiomeGrid grid) {
-        ChunkData data = this.createChunkData(world);
-        this.layers.forEach(chunkLayer -> chunkLayer.fill(data));
-
-        for (int x = 0; x < 16; x += 4)
-            for (int z = 0; z < 16; z += 4)
-                for (int y = 0; y < world.getMaxHeight() + 1; y += 4)
-                    grid.setBiome(x, y, z, this.biome);
-
-        return data;
+    public void generateSurface(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
+        this.layers.forEach(chunkLayer -> chunkLayer.fill(chunkData));
     }
 
     @Override
-    public boolean isParallelCapable() {
-        return true;
+    public void generateBedrock(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
+        this.layers.forEach(chunkLayer -> chunkLayer.fill(chunkData));
     }
+
+    @Override
+    public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
+        this.layers.forEach(chunkLayer -> chunkLayer.fill(chunkData));
+    }
+
+    @Override
+    public void generateCaves(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
+        this.layers.forEach(chunkLayer -> chunkLayer.fill(chunkData));
+    }
+
 }

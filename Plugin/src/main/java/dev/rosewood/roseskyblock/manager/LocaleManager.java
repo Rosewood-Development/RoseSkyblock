@@ -12,9 +12,4 @@ public class LocaleManager extends AbstractLocaleManager {
         super(rosePlugin);
     }
 
-    @Override
-    public List<Locale> getLocales() {
-        return null;
-    }
-
 }

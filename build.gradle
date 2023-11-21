@@ -1,14 +1,13 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.0' apply false
+    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
     id 'maven-publish'
 }
 
 allprojects {
-    apply plugin: 'java'
+    apply plugin: 'java-library'
     apply plugin: 'com.github.johnrengelman.shadow'
-
-    group 'dev.rosewood'
-    version '1.0.0-SNAPSHOT'
+    group = 'dev.rosewood'
+    version = '1.0.0-SNAPSHOT'
 
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
@@ -28,6 +27,11 @@ allprojects {
         maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
         maven { url = 'https://repo.rosewooddev.io/repository/public/' }
     }
+
+    dependencies {
+        compileOnly 'org.jetbrains:annotations:24.0.1'
+    }
+
 }
 
 dependencies {
@@ -44,8 +48,6 @@ dependencies {
 shadowJar {
     archiveClassifier.set(null)
 
-    relocate('org.jetbrains.annotations', 'dev.rosewood.roseskyblock.lib.annotations')
-    relocate('org.intellij.lang.annotations', 'dev.rosewood.roseskyblock.lib.annotations')
     relocate('dev.rosewood.rosegarden', 'dev.rosewood.roseskyblock.lib.rosegarden')
     relocate('dev.rosewood.guiframework', 'dev.rosewood.roseskyblock.lib.guiframework')
     relocate('io.papermc.lib', 'dev.rosewood.roseskyblock.lib.paperlib')
