@@ -48,10 +48,8 @@ public class IslandManager extends Manager {
                     break;
 
                 int temp = copy.get(i);
-                // TODO: i got hella confused here, kotlin did this
-                // copy[i] = copy[temp - 1]
-                // copy[temp - 1] = temp
-                // is it reassigning list values or something, if so how the hell would you do that in java
+                copy.set(i, copy.get(temp - 1));
+                copy.set(temp - 1, temp);
             }
         }
 
