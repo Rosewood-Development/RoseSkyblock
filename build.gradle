@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.0.0' apply false
+    id 'com.github.johnrengelman.shadow' version '7.1.0' apply false
     id 'maven-publish'
 }
 
@@ -9,8 +9,10 @@ allprojects {
 
     group 'dev.rosewood'
     version '1.0.0-SNAPSHOT'
-    sourceCompatibility = 1.17
-    targetCompatibility = 1.17
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    }
 
     repositories {
         mavenCentral()
@@ -25,17 +27,6 @@ allprojects {
         maven { url = 'https://libraries.minecraft.net' }
         maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
         maven { url = 'https://repo.rosewooddev.io/repository/public/' }
-
-        maven {
-            url = 'https://repo.rosewooddev.io/repository/maven-public'
-            credentials {
-                username project.mavenUser
-                password project.mavenPassword
-                authentication {
-                    basic(BasicAuthentication)
-                }
-            }
-        }
     }
 }
 
@@ -43,7 +34,11 @@ dependencies {
     implementation project(':Plugin')
     implementation project(':NMS:Wrapper')
     implementation project(path: ':NMS:v1_17_R1', configuration: 'remapped')
-    implementation project(path: ':NMS:v1_18_R1', configuration: 'remapped')
+    implementation project(path: ':NMS:v1_18_R2', configuration: 'remapped')
+    implementation project(path: ':NMS:v1_19_R1', configuration: 'remapped')
+    implementation project(path: ':NMS:v1_19_R2', configuration: 'remapped')
+    implementation project(path: ':NMS:v1_20_R1', configuration: 'remapped')
+    implementation project(path: ':NMS:v1_20_R2', configuration: 'remapped')
 }
 
 shadowJar {
@@ -56,11 +51,11 @@ shadowJar {
     relocate('io.papermc.lib', 'dev.rosewood.roseskyblock.lib.paperlib')
 
     // TODO: Fix minimize. There is about 600kb of unused stuff in the output jar
-    minimize {
-        subprojects.each {
-            exclude(project(it.path))
-        }
-    }
+//    minimize {
+//        subprojects.each {
+//            exclude(project(it.path))
+//        }
+//    }
 }
 
 publishing {

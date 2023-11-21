@@ -30,6 +30,7 @@ public class RoseSkyblock extends RosePlugin {
 
     @Override
     public void enable() {
+        // TODO: Use api-version in plugin.yml
         if (NMSUtil.getVersionNumber() < 17) {
             this.getLogger().severe("RoseSkyblock only supports 1.17 and above. The plugin has been disabled.");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -37,7 +38,7 @@ public class RoseSkyblock extends RosePlugin {
         }
 
         if (!Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
-            this.getLogger().severe("WorldEdit is a dependency of RoseSkyblock. Please instlal it or an async version to continue using this plugin.");
+            this.getLogger().severe("WorldEdit is a dependency of RoseSkyblock. Please install it or an async version to continue using this plugin.");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }

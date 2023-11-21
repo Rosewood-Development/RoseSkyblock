@@ -1,12 +1,12 @@
-package dev.rosewood.roseskyblock.nms.v1_17_R1;
+package dev.rosewood.roseskyblock.nms.v1_20_R2;
 
 import dev.rosewood.roseskyblock.nms.BorderColor;
 import dev.rosewood.roseskyblock.nms.NMSHandler;
 import net.minecraft.network.protocol.game.ClientboundInitializeBorderPacket;
 import net.minecraft.world.level.border.WorldBorder;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class NMSHandlerImpl implements NMSHandler {
